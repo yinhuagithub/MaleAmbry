@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
+ * BaseActivity.java
+ * Description: 所有子Activity必须继承BaseActivity
+ *
  * Created by yinhua on 2016/11/7.
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
