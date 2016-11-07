@@ -13,7 +13,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         app:roundColor="#22000000"
         app:roundProgressColor="#00ccff"
         app:roundWidth="2dp"

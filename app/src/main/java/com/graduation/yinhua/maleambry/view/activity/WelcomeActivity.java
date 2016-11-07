@@ -43,6 +43,11 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean getImmersiveStatus() {
+        return true;
+    }
+
+    @Override
     protected void initWidgets() {
         super.initWidgets();
 
