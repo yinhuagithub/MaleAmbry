@@ -1,7 +1,10 @@
 package com.graduation.yinhua.maleambry;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.graduation.yinhua.maleambry.view.activity.WelcomeActivity;
 
 /**
  * MainActivity.java
@@ -16,5 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startActivity(new Intent(this, WelcomeActivity.class));
     }
 }
