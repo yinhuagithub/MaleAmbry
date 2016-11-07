@@ -5,7 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by Administrator on 2016/11/7.
+ * Created by yinhua on 2016/11/7.
+ * git：https://github.com/yinhuagithub/MaleAmbry
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
