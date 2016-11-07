@@ -33,7 +33,7 @@ public class MaleAmbryApp extends Application {
         return mConfigSP;
     }
 
-    public static Context getmContext() {
+    public static Context getAppContext() {
         return mContext;
     }
 }
