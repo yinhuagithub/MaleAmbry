@@ -7,6 +7,8 @@ import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 import com.graduation.yinhua.maleambry.view.widgets.ParallaxContainer;
 
+import butterknife.BindView;
+
 /**
  * WelcomeActivity.java
  * Description:
@@ -16,8 +18,11 @@ import com.graduation.yinhua.maleambry.view.widgets.ParallaxContainer;
  */
 public class WelcomeActivity extends BaseActivity {
 
-    private ParallaxContainer mParallaxContainer;
-    private ImageView mIvMan;
+    @BindView(R.id.parallax_container)
+    ParallaxContainer mParallaxContainer;
+
+    @BindView(R.id.iv_man)
+    ImageView mIvMan;
 
     @Override
     protected int getContentView() {
@@ -27,9 +32,6 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void initWidget() {
         super.initWidget();
-
-        mIvMan = (ImageView) findViewById(R.id.iv_man);
-        mParallaxContainer = (ParallaxContainer) findViewById(R.id.parallax_container);
 
         mParallaxContainer.setAnimImageView(mIvMan);
         mIvMan.setVisibility(View.VISIBLE);
