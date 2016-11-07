@@ -21,16 +21,41 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getContentView());
 
         ButterKnife.bind(this);
-        initWidget();
-    }
 
-    protected void initWidget() {
+        initWidgets();
+        bindWidgets();
+        initListeners();
 
+        loadData();
     }
 
     /**
-     * 获取activity布局，子类必须实现该方法
+     * 初始化控件，该方法子类可选实现
+     */
+    protected void initWidgets(){
+    }
+
+    /**
+     * 初始化控件监听，该方法子类可选实现
+     */
+    protected void initListeners(){
+    }
+
+    /**
+     * 绑定控件，设置控件，该方法子类可选实现
+     */
+    protected void bindWidgets() {
+    }
+
+    /**
+     * 获取activity布局，该方法子类必须实现
      * @return
      */
     protected abstract int getContentView();
+
+    /**
+     * 加载所需的数据，该方法子类可选实现
+     */
+    protected void loadData(){
+    }
 }

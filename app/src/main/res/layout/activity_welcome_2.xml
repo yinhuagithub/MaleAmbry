@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/first_image_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_welcome">
+
+    <com.graduation.yinhua.maleambry.view.widgets.RoundProgressBar
+        android:id="@+id/roundProgressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        app:roundColor="#22000000"
+        app:roundProgressColor="#00ccff"
+        app:roundWidth="2dp"
+        app:textColor="#FFFFFF"
+        app:textSize="12dp" />
+
+    <ImageView
+        android:layout_width="124dp"
+        android:layout_height="114dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/male_ambry_icon" />
+
+</RelativeLayout>
