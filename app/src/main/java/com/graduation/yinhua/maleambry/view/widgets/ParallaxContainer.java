@@ -30,7 +30,6 @@ public class ParallaxContainer extends FrameLayout {
 
     private static final long DELAY_TIME = 600;
 
-    private final Context mContext;
     private final ParallaxPagerAdapter mParallaxPagerAdapter;
 
     private ViewPager mParallaxViewPager;
@@ -41,9 +40,7 @@ public class ParallaxContainer extends FrameLayout {
     private List<View> parallaxViews = new ArrayList<View>();
     private List<View> rootViews = new ArrayList<View>();
     private boolean isEnd = false;
-    private boolean isLooping;
     private int pageCount;
-    private int currentPosition;
     private int containerWidth;
 
     public ParallaxContainer(Context context) {
@@ -57,7 +54,6 @@ public class ParallaxContainer extends FrameLayout {
     public ParallaxContainer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        this.mContext = context;
         mParallaxPagerAdapter = new ParallaxPagerAdapter(context);
     }
 
@@ -139,9 +135,7 @@ public class ParallaxContainer extends FrameLayout {
             }
 
             @Override
-            public void onPageSelected(int position) {
-                currentPosition = position;
-            }
+            public void onPageSelected(int position) { }
 
             @Override
             public void onPageScrollStateChanged(int state) {

@@ -1,9 +1,10 @@
-package com.graduation.yinhua.maleambry;
+package com.graduation.yinhua.maleambry.view.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.view.activity.WelcomeActivity;
 
 /**
