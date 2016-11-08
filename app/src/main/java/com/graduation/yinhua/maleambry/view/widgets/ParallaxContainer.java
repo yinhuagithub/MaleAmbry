@@ -155,7 +155,7 @@ public class ParallaxContainer extends FrameLayout {
             position = position % pageCount;
         }
 
-        if (position == 3) {
+        if (position == 2) {
             mAnimMan.setX(mAnimMan.getLeft() - offsetPixels);
         }
 

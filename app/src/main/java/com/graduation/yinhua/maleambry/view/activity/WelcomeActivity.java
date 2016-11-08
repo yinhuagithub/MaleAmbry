@@ -66,7 +66,7 @@ public class WelcomeActivity extends BaseActivity {
         if(isFirstRun) {
             mParallaxContainer.setAnimImageView(mIvMan);
             mIvMan.setVisibility(View.VISIBLE);
-            mParallaxContainer.setupChildren(getLayoutInflater(), R.layout.view_intro_1, R.layout.view_intro_2, R.layout.view_intro_3, R.layout.view_intro_4, R.layout.view_intro_5);
+            mParallaxContainer.setupChildren(getLayoutInflater(), R.layout.view_intro_1, R.layout.view_intro_2, R.layout.view_intro_3, R.layout.view_intro_4);
         }
     }
 
