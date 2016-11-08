@@ -2,7 +2,7 @@ package com.graduation.yinhua.maleambry.presenter;
 import com.graduation.yinhua.maleambry.contract.WelcomeContract;
 
 /**
- * WelcomePresenterImpl.java
+ * WelcomePresenter.java
  * Description:
  * <p/>
  * Created by yinhua on 2016/11/8.
@@ -10,7 +10,4 @@ import com.graduation.yinhua.maleambry.contract.WelcomeContract;
  */
 public class WelcomePresenter extends BasePresenter<WelcomeContract.View> implements WelcomeContract.Presenter{
 
-    public void a() {
-
-    }
 }

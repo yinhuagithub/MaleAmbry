@@ -20,8 +20,8 @@ public class SPUtils {
     /**
      * SPUtils构造函数
      *
-     * @param context 上下文
-     * @param spName  spName
+     * @param context
+     * @param spName
      */
     public SPUtils(Context context, String spName) {
         sp = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
@@ -32,8 +32,8 @@ public class SPUtils {
     /**
      * SP中写入String类型value
      *
-     * @param key   键
-     * @param value 值
+     * @param key
+     * @param value
      */
     public void putString(String key, String value) {
         editor.putString(key, value).apply();
@@ -42,7 +42,7 @@ public class SPUtils {
     /**
      * SP中读取String
      *
-     * @param key 键
+     * @param key
      * @return 存在返回对应值，不存在返回默认值{@code null}
      */
     public String getString(String key) {
@@ -52,8 +52,8 @@ public class SPUtils {
     /**
      * SP中读取String
      *
-     * @param key          键
-     * @param defaultValue 默认值
+     * @param key
+     * @param defaultValue
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public String getString(String key, String defaultValue) {
@@ -63,8 +63,8 @@ public class SPUtils {
     /**
      * SP中写入int类型value
      *
-     * @param key   键
-     * @param value 值
+     * @param key
+     * @param value
      */
     public void putInt(String key, int value) {
         editor.putInt(key, value).apply();
@@ -73,7 +73,7 @@ public class SPUtils {
     /**
      * SP中读取int
      *
-     * @param key 键
+     * @param key
      * @return 存在返回对应值，不存在返回默认值-1
      */
     public int getInt(String key) {
@@ -83,8 +83,8 @@ public class SPUtils {
     /**
      * SP中读取int
      *
-     * @param key          键
-     * @param defaultValue 默认值
+     * @param key
+     * @param defaultValue
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public int getInt(String key, int defaultValue) {
@@ -94,8 +94,8 @@ public class SPUtils {
     /**
      * SP中写入long类型value
      *
-     * @param key   键
-     * @param value 值
+     * @param key
+     * @param value
      */
     public void putLong(String key, long value) {
         editor.putLong(key, value).apply();
@@ -104,7 +104,7 @@ public class SPUtils {
     /**
      * SP中读取long
      *
-     * @param key 键
+     * @param key
      * @return 存在返回对应值，不存在返回默认值-1
      */
     public long getLong(String key) {
@@ -114,8 +114,8 @@ public class SPUtils {
     /**
      * SP中读取long
      *
-     * @param key          键
-     * @param defaultValue 默认值
+     * @param key
+     * @param defaultValue
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public long getLong(String key, long defaultValue) {
@@ -125,8 +125,8 @@ public class SPUtils {
     /**
      * SP中写入float类型value
      *
-     * @param key   键
-     * @param value 值
+     * @param key
+     * @param value
      */
     public void putFloat(String key, float value) {
         editor.putFloat(key, value).apply();
@@ -135,7 +135,7 @@ public class SPUtils {
     /**
      * SP中读取float
      *
-     * @param key 键
+     * @param key
      * @return 存在返回对应值，不存在返回默认值-1
      */
     public float getFloat(String key) {
@@ -145,8 +145,8 @@ public class SPUtils {
     /**
      * SP中读取float
      *
-     * @param key          键
-     * @param defaultValue 默认值
+     * @param key
+     * @param defaultValue
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public float getFloat(String key, float defaultValue) {
@@ -156,8 +156,8 @@ public class SPUtils {
     /**
      * SP中写入boolean类型value
      *
-     * @param key   键
-     * @param value 值
+     * @param key
+     * @param value
      */
     public void putBoolean(String key, boolean value) {
         editor.putBoolean(key, value).apply();
@@ -166,7 +166,7 @@ public class SPUtils {
     /**
      * SP中读取boolean
      *
-     * @param key 键
+     * @param key
      * @return 存在返回对应值，不存在返回默认值{@code false}
      */
     public boolean getBoolean(String key) {
@@ -176,8 +176,8 @@ public class SPUtils {
     /**
      * SP中读取boolean
      *
-     * @param key          键
-     * @param defaultValue 默认值
+     * @param key
+     * @param defaultValue
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public boolean getBoolean(String key, boolean defaultValue) {
@@ -187,7 +187,7 @@ public class SPUtils {
     /**
      * 获取SP中所有键值对
      *
-     * @return Map对象
+     * @return
      */
     public Map<String, ?> getAll() {
         return sp.getAll();
@@ -196,7 +196,7 @@ public class SPUtils {
     /**
      * 从SP中移除该key
      *
-     * @param key 键
+     * @param key
      */
     public void remove(String key) {
         editor.remove(key).apply();
@@ -205,7 +205,7 @@ public class SPUtils {
     /**
      * 判断SP中是否存在该key
      *
-     * @param key 键
+     * @param key
      * @return {@code true}: 存在<br>{@code false}: 不存在
      */
     public boolean contains(String key) {
