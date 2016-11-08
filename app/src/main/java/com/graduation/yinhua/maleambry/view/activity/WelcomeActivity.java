@@ -6,7 +6,9 @@ import android.widget.ImageView;
 
 import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
-import com.graduation.yinhua.maleambry.view.base.BaseActivity;
+import com.graduation.yinhua.maleambry.contract.WelcomeContract;
+import com.graduation.yinhua.maleambry.presenter.WelcomePresenter;
+import com.graduation.yinhua.maleambry.view.base.BaseMVPActivity;
 import com.graduation.yinhua.maleambry.view.widgets.ParallaxContainer;
 import com.graduation.yinhua.maleambry.view.widgets.ParallaxImageView;
 import com.graduation.yinhua.maleambry.view.widgets.RoundProgressBar;
@@ -18,7 +20,7 @@ import com.graduation.yinhua.maleambry.view.widgets.RoundProgressBar;
  * Created by yinhua on 2016/11/7.
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends BaseMVPActivity<WelcomeContract.View, WelcomePresenter> implements WelcomeContract.View {
 
     private static final String FIRST_RUN = "isFirstRun";
 
@@ -101,16 +103,18 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
-        super.loadData();
-    }
-
-    /**
-     * 进入主界面
-     */
     public void enterMainActivity() {
         MaleAmbryApp.getConfigSP().putBoolean(FIRST_RUN, false);
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    @Override
+    protected WelcomePresenter createPresenter() {
+        return new WelcomePresenter();
+    }
+
+    @Override
+    public void loadLocalData() {
     }
 }

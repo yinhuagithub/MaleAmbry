@@ -10,6 +10,10 @@ package com.graduation.yinhua.maleambry.contract;
 public class WelcomeContract {
     
 public interface View{
+    //加载本地数据
+    void loadLocalData();
+    //进入主界面
+    void enterMainActivity();
 }
 
 public interface Presenter{

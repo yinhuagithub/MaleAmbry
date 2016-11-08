@@ -30,8 +30,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         initWidgets();
         bindWidgets();
         initListeners();
-
-        loadData();
     }
 
     /**
@@ -82,9 +80,4 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected abstract int getContentView();
 
-    /**
-     * 加载所需的数据，该方法子类可选实现
-     */
-    protected void loadData(){
-    }
 }
