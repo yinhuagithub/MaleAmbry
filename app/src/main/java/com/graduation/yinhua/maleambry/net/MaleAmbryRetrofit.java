@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * MaleAmbryRetrofit.java
- * Description:
+ * Description:使用静态内部类实现单例模式，保证线程安全
  * <p/>
  * Created by yinhua on 2016/11/8.
  * git：https://github.com/yinhuagithub/MaleAmbry
