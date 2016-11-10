@@ -2,16 +2,17 @@ package com.graduation.yinhua.maleambry.view.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 /**
- * Created by yinhua on 2016/10/23.
- * <p>
- * Viewpager + Fragment情况下，fragment的生命周期因Viewpager的缓存机制而失去了具体意义
+ * BaseLazyLoaderFragment.java
+ * Description:  Viewpager + Fragment情况下，fragment的生命周期因Viewpager的缓存机制而失去了具体意义
  * 使用懒加载，避免加载过多还未展示的数据
+ *
+ * Created by yinhua on 2016/11/10.
+ * git：https://github.com/yinhuagithub/MaleAmbry
  */
-public abstract class BaseLazyLoaderFragment extends Fragment {
+public abstract class BaseLazyLoaderFragment extends BaseFragment {
     private static final String TAG = BaseLazyLoaderFragment.class.getSimpleName();
 
     /**
@@ -23,11 +24,6 @@ public abstract class BaseLazyLoaderFragment extends Fragment {
      * 当前Fragment是否处于可见状态标志，防止因ViewPager的缓存机制而导致回调函数的触发
      */
     private boolean mIsFragmentVisible;
-
-    /**
-     * onCreateView()里返回的view，修饰为protected,所以子类继承该类时，在onCreateView里必须对该变量进行初始化
-     */
-    protected View mRootView;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

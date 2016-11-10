@@ -6,4 +6,13 @@
     <string name="match">搭配</string>
     <string name="discovery">发现</string>
     <string name="mine">我的</string>
+
+    <string name="xiuxian">休闲</string>
+    <string name="shangwu">商务</string>
+    <string name="yundong">运动</string>
+    <string name="jianyue">简约</string>
+    <string name="fugu">复古</string>
+    <string name="yinglun">英伦</string>
+    <string name="rihan">日韩</string>
+    <string name="jietou">街头</string>
 </resources>
