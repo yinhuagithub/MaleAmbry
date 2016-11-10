@@ -8,4 +8,5 @@
     <color name="white">#ffffffff</color>
     <color name="transparent">#00000000</color>
     <color name="bg_gray">#ffebebeb</color>
+    <color name="light_grey">#E0DCDC</color>
 </resources>

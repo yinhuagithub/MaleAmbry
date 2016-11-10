@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_shadow_item"
+    android:layout_height="wrap_content">
+
+    <com.graduation.yinhua.maleambry.view.widgets.RatioImageView
+        android:id="@+id/riv_match_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:origin_height="1"
+        app:origin_width="1"
+        android:src="@mipmap/man1"
+        />
+
+    <TextView
+        android:id="@+id/tv_match_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:singleLine="true"
+        android:layout_below="@id/riv_match_item"
+        android:text="街头欧美搭"/>
+    
+    <View
+        android:id="@+id/v_divider1"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_below="@id/tv_match_name"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/tv_match_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:singleLine="true"
+        android:layout_below="@id/v_divider1"
+        android:text="夹克+牛仔裤+马丁靴" />
+
+</RelativeLayout>
