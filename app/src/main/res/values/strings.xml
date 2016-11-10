@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MaleAmbry</string>
+
+    <string name="home">首页</string>
+    <string name="single">单品</string>
+    <string name="match">搭配</string>
+    <string name="discovery">发现</string>
+    <string name="mine">我的</string>
 </resources>

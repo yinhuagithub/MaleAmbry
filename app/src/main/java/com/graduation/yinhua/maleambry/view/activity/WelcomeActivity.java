@@ -56,25 +56,18 @@ public class WelcomeActivity extends BaseMVPActivity<WelcomeContract.View, Welco
         if(isFirstRun) {
             mParallaxContainer = (ParallaxContainer) findViewById(R.id.parallax_container);
             mIvMan = (ImageView) findViewById(R.id.iv_man);
+
+            mParallaxContainer.setAnimImageView(mIvMan);
+            mIvMan.setVisibility(View.VISIBLE);
+            mParallaxContainer.setupChildren(getLayoutInflater(), R.layout.view_intro_1, R.layout.view_intro_2, R.layout.view_intro_3, R.layout.view_intro_4);
         } else {
             mRoundProgressBar = (RoundProgressBar) findViewById(R.id.roundProgressBar);
         }
     }
 
     @Override
-    protected void bindWidgets() {
-        super.bindWidgets();
-
-        if(isFirstRun) {
-            mParallaxContainer.setAnimImageView(mIvMan);
-            mIvMan.setVisibility(View.VISIBLE);
-            mParallaxContainer.setupChildren(getLayoutInflater(), R.layout.view_intro_1, R.layout.view_intro_2, R.layout.view_intro_3, R.layout.view_intro_4);
-        }
-    }
-
-    @Override
-    protected void initListeners() {
-        super.initListeners();
+    protected void initEvents() {
+        super.initEvents();
 
         if(isFirstRun) {
             mPivEnterMain = (ParallaxImageView) findViewById(R.id.piv_enter_main);

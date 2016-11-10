@@ -28,8 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initWidgets();
-        bindWidgets();
-        initListeners();
+        initEvents();
     }
 
     /**
@@ -51,8 +50,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 decorView.setSystemUiVisibility(option);
                 getWindow().setStatusBarColor(Color.TRANSPARENT);
             }
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.hide();
         }
     }
 
@@ -65,13 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 初始化控件监听，该方法子类可选实现
      */
-    protected void initListeners(){
-    }
-
-    /**
-     * 绑定控件，设置控件，该方法子类可选实现
-     */
-    protected void bindWidgets() {
+    protected void initEvents(){
     }
 
     /**
