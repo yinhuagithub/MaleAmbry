@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/bg_shadow_item">
+
+    <TextView
+        android:id="@+id/tv_discovery_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="8dp"
+        android:singleLine="true"
+        android:text="多长才能满足你？ | 是时候要有一件薄风衣了"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <com.graduation.yinhua.maleambry.view.widgets.RatioImageView
+        android:id="@+id/riv_discovery_thumb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_discovery_title"
+        android:scaleType="centerCrop"
+        android:src="@drawable/discovery1"
+        app:origin_height="1"
+        app:origin_width="2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/riv_discovery_thumb"
+        android:paddingBottom="15dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="15dp">
+
+        <ImageView
+            android:id="@+id/iv_discovery_eye"
+            android:layout_width="26dp"
+            android:layout_height="14dp"
+            android:src="@mipmap/eye" />
+
+        <TextView
+            android:id="@+id/tv_discovery_viewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/iv_discovery_eye"
+            android:singleLine="true"
+            android:text="51968"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="立即阅读 >"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

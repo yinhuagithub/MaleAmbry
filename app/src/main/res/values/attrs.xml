@@ -20,8 +20,8 @@
     </declare-styleable>
 
     <declare-styleable name="RatioImageView">
-        <attr name="origin_width" format="integer"/>
-        <attr name="origin_height" format="integer"/>
+        <attr name="origin_width" format="float"/>
+        <attr name="origin_height" format="float"/>
     </declare-styleable>
 
 </resources>

@@ -16,8 +16,8 @@ import com.graduation.yinhua.maleambry.R;
  */
 public class RatioImageView extends ImageView {
 
-    private int originWidth;
-    private int originHeight;
+    private float originWidth;
+    private float originHeight;
 
     public RatioImageView(Context context) {
         this(context, null);
@@ -30,12 +30,12 @@ public class RatioImageView extends ImageView {
     public RatioImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RatioImageView);
-        originWidth = ta.getInteger(R.styleable.RatioImageView_origin_width, 0);
-        originHeight = ta.getInteger(R.styleable.RatioImageView_origin_height, 0);
+        originWidth = ta.getFloat(R.styleable.RatioImageView_origin_width, 0f);
+        originHeight = ta.getFloat(R.styleable.RatioImageView_origin_height, 0f);
         ta.recycle();
     }
 
-    public void setOriginSize(int originWidth, int originHeight) {
+    public void setOriginSize(float originWidth, float originHeight) {
         this.originWidth = originWidth;
         this.originHeight = originHeight;
     }
@@ -43,7 +43,7 @@ public class RatioImageView extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (originHeight >0 && originWidth >0) {
-            float ratio = (float) originWidth / (float)originHeight;
+            float ratio = originWidth / originHeight;
 
             int width = MeasureSpec.getSize(widthMeasureSpec);
             int height = MeasureSpec.getSize(heightMeasureSpec);

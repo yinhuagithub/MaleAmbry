@@ -3,6 +3,7 @@ package com.graduation.yinhua.maleambry.view.activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -98,6 +99,7 @@ public class MainActivity extends BaseActivity {
                     home = new HomeFragment();
                 }
                 mTvTitle.setText(R.string.home);
+                mToolbar.setVisibility(View.VISIBLE);
                 return home;
             }
             case 1: {
@@ -105,6 +107,7 @@ public class MainActivity extends BaseActivity {
                     single = new SingleFragment();
                 }
                 mTvTitle.setText(R.string.single);
+                mToolbar.setVisibility(View.VISIBLE);
                 return single;
             }
             case 2: {
@@ -112,6 +115,7 @@ public class MainActivity extends BaseActivity {
                     match = new MatchFragment();
                 }
                 mTvTitle.setText(R.string.match);
+                mToolbar.setVisibility(View.VISIBLE);
                 return match;
             }
             case 3: {
@@ -119,6 +123,7 @@ public class MainActivity extends BaseActivity {
                     discovery = new DiscoveryFragment();
                 }
                 mTvTitle.setText(R.string.discovery);
+                mToolbar.setVisibility(View.VISIBLE);
                 return discovery;
             }
             case 4: {
@@ -126,6 +131,7 @@ public class MainActivity extends BaseActivity {
                     mine = new MineFragment();
                 }
                 mTvTitle.setText(R.string.mine);
+                mToolbar.setVisibility(View.GONE);
                 return mine;
             }
         }

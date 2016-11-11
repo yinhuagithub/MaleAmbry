@@ -4,12 +4,124 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我的"
-        android:layout_marginTop="100dp"
-        android:layout_gravity="center"
-        android:textSize="30sp"/>
+    <include
+        layout="@layout/mine_head" />
 
+    <RelativeLayout
+        android:id="@+id/rl_mine_favorite"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:paddingTop="10dp"
+        android:paddingStart="20dp">
+
+        <ImageView
+            android:id="@+id/iv_mine_favorite"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_mine_fav"/>
+
+        <TextView
+            android:id="@+id/tv_mine_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/mine_item_text_color"
+            android:textSize="16sp"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/iv_mine_favorite"
+            android:text="@string/favorite"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/mine_goto_right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            />
+
+        <View
+            android:layout_alignLeft="@id/tv_mine_favorite"
+            android:layout_width="match_parent"
+            android:background="@color/mine_item_text_color"
+            android:layout_alignParentBottom="true"
+            android:layout_height="0.3dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_mine_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:background="@color/white"
+        android:paddingTop="10dp"
+        android:paddingStart="20dp">
+
+        <ImageView
+            android:id="@+id/iv_mine_feedback"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_mine_suggest"/>
+
+        <TextView
+            android:id="@+id/tv_mine_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/mine_item_text_color"
+            android:textSize="16sp"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/iv_mine_feedback"
+            android:text="@string/feedback"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/mine_goto_right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_mine_settings"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:paddingTop="10dp"
+        android:paddingStart="20dp">
+
+        <ImageView
+            android:id="@+id/iv_mine_settings"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_mine_setting"/>
+
+        <TextView
+            android:id="@+id/tv_mine_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/mine_item_text_color"
+            android:textSize="16sp"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/iv_mine_settings"
+            android:text="@string/settings"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/mine_goto_right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            />
+
+    </RelativeLayout>
 </LinearLayout>
