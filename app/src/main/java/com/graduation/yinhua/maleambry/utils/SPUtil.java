@@ -6,13 +6,13 @@ import android.content.SharedPreferences;
 import java.util.Map;
 
 /**
- * SPUtils.java
+ * SPUtil.java
  * Description: SharedPreferences工具类
  *
  * Created by yinhua on 2016/11/7.
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
-public class SPUtils {
+public class SPUtil {
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
@@ -23,7 +23,7 @@ public class SPUtils {
      * @param context
      * @param spName
      */
-    public SPUtils(Context context, String spName) {
+    public SPUtil(Context context, String spName) {
         sp = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
         editor = sp.edit();
         editor.apply();

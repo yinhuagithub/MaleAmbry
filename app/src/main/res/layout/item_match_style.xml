@@ -1,28 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:background="@color/white"
-    android:paddingTop="5dp"
+    android:padding="5dp"
     android:layout_height="wrap_content">
 
-    <com.graduation.yinhua.maleambry.view.widgets.RatioImageView
-        android:id="@+id/iv_match_style"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_match_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/xiuxian"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="5dp"
-        android:scaleType="fitXY"
-        app:origin_width="1"
-        app:origin_height="1"/>
-
-    <TextView
-        android:id="@+id/tv_match_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:layout_marginTop="5dp"
-        android:text="@string/xiuxian"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_height="wrap_content" />
+</RelativeLayout>

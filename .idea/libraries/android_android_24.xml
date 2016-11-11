@@ -4,6 +4,8 @@
       <root url="jar://E:/androidstudio/Sdk/platforms/android-24/android.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://E:/androidstudio/Sdk/sources/android-24" />
+    </SOURCES>
   </library>
 </component>

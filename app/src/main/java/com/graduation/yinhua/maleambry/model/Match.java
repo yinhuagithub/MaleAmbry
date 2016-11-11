@@ -11,19 +11,20 @@ import com.graduation.yinhua.maleambry.R;
  */
 public class Match {
 
-    public static final int[] names = new int[]{R.string.xiuxian, R.string.shangwu, R.string.yundong, R.string.jianyue, R.string.fugu, R.string.yinglun, R.string.rihan, R.string.jietou};
-
-    public static final int[] res = new int[]{R.mipmap.xiuxian, R.mipmap.shangwu, R.mipmap.yundong, R.mipmap.jianyue, R.mipmap.fugu, R.mipmap.yinglun, R.mipmap.rihan, R.mipmap.jietou};
-
     private int resource;
     private String name;
+    private String descrption;
 
-    public int getResource(int position) {
-        return res[position];
+    public int getResource() {
+        return resource;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getDescrption() {
+        return descrption;
     }
 
     public void setResource(int resource) {
@@ -32,5 +33,9 @@ public class Match {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDescrption(String descrption) {
+        this.descrption = descrption;
     }
 }

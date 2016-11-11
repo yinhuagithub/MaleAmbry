@@ -3,7 +3,7 @@ package com.graduation.yinhua.maleambry;
 import android.app.Application;
 import android.content.Context;
 
-import com.graduation.yinhua.maleambry.utils.SPUtils;
+import com.graduation.yinhua.maleambry.utils.SPUtil;
 
 /**
  * MaleAmbryApp.java
@@ -17,7 +17,7 @@ public class MaleAmbryApp extends Application {
     private static final String TAG = MaleAmbryApp.class.getSimpleName();
     private static final String SP_CONFIG_NAME = "config";
 
-    private static SPUtils mConfigSP;
+    private static SPUtil mConfigSP;
     private static Context mContext;
 
 
@@ -26,10 +26,10 @@ public class MaleAmbryApp extends Application {
         super.onCreate();
 
         mContext = getApplicationContext();
-        mConfigSP = new SPUtils(mContext, SP_CONFIG_NAME);
+        mConfigSP = new SPUtil(mContext, SP_CONFIG_NAME);
     }
 
-    public static SPUtils getConfigSP() {
+    public static SPUtil getConfigSP() {
         return mConfigSP;
     }
 
