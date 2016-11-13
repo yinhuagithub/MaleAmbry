@@ -2,6 +2,8 @@ package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.DiscoveryAdapter;
@@ -24,6 +26,9 @@ import butterknife.BindView;
  */
 public class DiscoveryFragment extends BaseMVPFragment<DiscoveryContract.View, DiscoveryPresenter> implements DiscoveryContract.View {
 
+    @BindView(R.id.toolbar_title)
+    TextView mTvTitle;
+
     @BindView(R.id.rv_discovery)
     RecyclerView mRvDiscovery;
 
@@ -38,6 +43,7 @@ public class DiscoveryFragment extends BaseMVPFragment<DiscoveryContract.View, D
     protected void initWidgets() {
         super.initWidgets();
 
+        mTvTitle.setText(R.string.discovery);
         mRvDiscovery.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new DiscoveryAdapter();
         List<Discovery> list = new ArrayList<>();

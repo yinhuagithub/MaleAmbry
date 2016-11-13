@@ -2,6 +2,7 @@ package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.MatchAdapter;
@@ -25,6 +26,9 @@ import butterknife.BindView;
  */
 public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPresenter> implements MatchContract.View {
 
+    @BindView(R.id.toolbar_title)
+    TextView mTvTitle;
+
     @BindView(R.id.rv_match)
     RecyclerView mRvMatch;
 
@@ -38,6 +42,8 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
     @Override
     protected void initWidgets() {
         super.initWidgets();
+
+        mTvTitle.setText(R.string.match);
 
         List list = new ArrayList();
 

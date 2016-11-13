@@ -4,12 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="单品"
-        android:layout_marginTop="100dp"
-        android:layout_gravity="center"
-        android:textSize="30sp"/>
+    <include layout="@layout/center_toolbar" />
 
 </LinearLayout>

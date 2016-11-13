@@ -2,9 +2,6 @@ package com.graduation.yinhua.maleambry.view.activity;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -29,12 +26,6 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar mBottomNavigationBar;
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
-    @BindView(R.id.toolbar_title)
-    TextView mTvTitle;
 
     HomeFragment home;
     SingleFragment single;
@@ -61,15 +52,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initWidgets() {
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
         mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.home, R.string.home))
                 .addItem(new BottomNavigationItem(R.mipmap.single, R.string.single))
                 .addItem(new BottomNavigationItem(R.mipmap.match, R.string.match))
                 .addItem(new BottomNavigationItem(R.mipmap.discover, R.string.discovery))
                 .addItem(new BottomNavigationItem(R.mipmap.mine, R.string.mine))
                 .initialise();
-        mTvTitle.setText(R.string.home);
     }
 
     @Override
@@ -98,40 +86,30 @@ public class MainActivity extends BaseActivity {
                 if(home == null) {
                     home = new HomeFragment();
                 }
-                mTvTitle.setText(R.string.home);
-                mToolbar.setVisibility(View.VISIBLE);
                 return home;
             }
             case 1: {
                 if(single == null) {
                     single = new SingleFragment();
                 }
-                mTvTitle.setText(R.string.single);
-                mToolbar.setVisibility(View.VISIBLE);
                 return single;
             }
             case 2: {
                 if(match == null) {
                     match = new MatchFragment();
                 }
-                mTvTitle.setText(R.string.match);
-                mToolbar.setVisibility(View.VISIBLE);
                 return match;
             }
             case 3: {
                 if(discovery == null) {
                     discovery = new DiscoveryFragment();
                 }
-                mTvTitle.setText(R.string.discovery);
-                mToolbar.setVisibility(View.VISIBLE);
                 return discovery;
             }
             case 4: {
                 if(mine == null) {
                     mine = new MineFragment();
                 }
-                mTvTitle.setText(R.string.mine);
-                mToolbar.setVisibility(View.GONE);
                 return mine;
             }
         }
