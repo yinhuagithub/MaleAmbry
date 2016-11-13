@@ -1,27 +1,49 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.adapter.BannerAdapter;
 import com.graduation.yinhua.maleambry.contract.HomeContract;
 import com.graduation.yinhua.maleambry.presenter.HomePresenter;
 import com.graduation.yinhua.maleambry.view.base.BaseMVPFragment;
+import com.graduation.yinhua.maleambry.view.widgets.BannerTimerController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
 /**
+ * HomeFragment.java
+ * Description:首页
+ * <p/>
  * Created by yinhua on 2016/11/9.
+ * git：https://github.com/yinhuagithub/MaleAmbry
  */
 public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
 
+    /**
+     * 图片轮播默认的时间间隔
+     */
+    private static final int DEFAULT_INTERVAL = 3000;
+
     @BindView(R.id.toolbar_title)
     TextView mTvTitle;
+
+    @BindView(R.id.vp_banner)
+    ViewPager vp_banner;
+
+    private BannerAdapter mAdapter;
+
+    private List<String> mData = new ArrayList<>();
+    private BannerTimerController mTimerController = new BannerTimerController(DEFAULT_INTERVAL) {
+        @Override
+        protected void onTick() {
+            mAdapter.toNextItem(vp_banner);
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -32,7 +54,13 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     protected void initWidgets() {
         super.initWidgets();
 
+        mData.add("http://image3.chelaile.net.cn/5393b01188a84f2886f498a3fa3ac819");
+        mData.add("http://image3.chelaile.net.cn/2dcbcf8031114632a9c7a654b6a38b75");
+        mData.add("http://image3.chelaile.net.cn/ce9c9c0ca23a4efbba622275a3e8a786");
         mTvTitle.setText(R.string.home);
+        mAdapter = new BannerAdapter(getContext());
+        vp_banner.setAdapter(mAdapter);
+        mAdapter.updateData(vp_banner, mData);
     }
 
     @Override
@@ -44,4 +72,17 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     protected void onFragmentVisibleChange(boolean isVisible) {
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTimerController.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mTimerController.cancel();
+    }
+
 }

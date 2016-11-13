@@ -2,7 +2,6 @@ package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
