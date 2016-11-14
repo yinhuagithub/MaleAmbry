@@ -1,6 +1,10 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
@@ -23,6 +27,7 @@ import butterknife.BindView;
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
 public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
+    private static final String TAG = HomeFragment.class.getSimpleName();
 
     /**
      * 图片轮播默认的时间间隔
@@ -33,7 +38,10 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     TextView mTvTitle;
 
     @BindView(R.id.vp_banner)
-    ViewPager vp_banner;
+    ViewPager mVpBanner;
+
+    @BindView(R.id.ll_dots)
+    LinearLayout mLlDots;
 
     private BannerAdapter mAdapter;
 
@@ -41,7 +49,22 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     private BannerTimerController mTimerController = new BannerTimerController(DEFAULT_INTERVAL) {
         @Override
         protected void onTick() {
-            mAdapter.toNextItem(vp_banner);
+            mAdapter.toNextItem(mVpBanner);
+        }
+    };
+
+    private BannerAdapter.OnCurrentItemChangedListener mBannerListener = new BannerAdapter.OnCurrentItemChangedListener() {
+        @Override
+        public void onCurrentItemChanged(int currentItem) {
+            int childCount = mLlDots.getChildCount();
+            for (int index = 0; index < childCount; index++) {
+                ImageView iv = (ImageView)mLlDots.getChildAt(index);
+                if(index == currentItem - 1) {
+                    iv.setEnabled(true);
+                } else {
+                    iv.setEnabled(false);
+                }
+            }
         }
     };
 
@@ -59,8 +82,9 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
         mData.add("http://image3.chelaile.net.cn/ce9c9c0ca23a4efbba622275a3e8a786");
         mTvTitle.setText(R.string.home);
         mAdapter = new BannerAdapter(getContext());
-        vp_banner.setAdapter(mAdapter);
-        mAdapter.updateData(vp_banner, mData);
+        mAdapter.setOnCurrentItemChangedListener(mBannerListener);
+        mVpBanner.setAdapter(mAdapter);
+        mAdapter.updateData(mVpBanner, mData);
     }
 
     @Override
