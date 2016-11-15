@@ -14,5 +14,11 @@
         <item name="android:windowBackground">@color/light_grey</item>
     </style>
 
-
+    <style name="match_thumb">
+        <item name="layout_height">wrap_content</item>
+        <item name="scaleType">fitXY</item>
+        <item name="src">@drawable/default_nanyichu</item>
+        <item name="com.graduation.yinhua.maleambry.view.widgets:origin_width">1</item>
+        <item name="com.graduation.yinhua.maleambry.view.widgets:origin_height">1.5</item>
+    </style>
 </resources>
