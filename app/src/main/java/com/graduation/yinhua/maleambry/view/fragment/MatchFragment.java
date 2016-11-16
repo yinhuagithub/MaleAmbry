@@ -48,27 +48,33 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
         List list = new ArrayList();
 
         Match item1 = new Match();
-        item1.setResource(R.mipmap.man1);
-        item1.setName("英伦简约搭");
+        item1.setThumb1(R.mipmap.man1);
+        item1.setThumb2(R.mipmap.man2);
+        item1.setThumb3(R.mipmap.man3);
+        item1.setTitle("英伦简约搭");
         item1.setDescrption("毛衣+牛仔裤+马丁靴");
         list.add(item1);
 
         Match item2 = new Match();
-        item2.setResource(R.mipmap.man2);
-        item2.setName("日韩街头男孩穿搭");
+        item2.setThumb1(R.mipmap.man2);
+        item2.setThumb2(R.mipmap.man3);
+        item2.setThumb3(R.mipmap.man1);
+        item2.setTitle("日韩街头男孩穿搭");
         item2.setDescrption("风衣+休闲裤+高帮鞋");
         list.add(item2);
 
         Match item3 = new Match();
-        item3.setResource(R.mipmap.man3);
-        item3.setName("卡其工装外套穿搭");
+        item3.setThumb1(R.mipmap.man3);
+        item3.setThumb2(R.mipmap.man1);
+        item3.setThumb3(R.mipmap.man2);
+        item3.setTitle("卡其工装外套穿搭");
         item3.setDescrption("工装外套+牛仔裤+帆布鞋");
         list.add(item3);
 
         mAdapter = new MatchAdapter();
         mAdapter.addItems(list,true);
 
-        final GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
+        final GridLayoutManager manager = new GridLayoutManager(getContext(), 1);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {

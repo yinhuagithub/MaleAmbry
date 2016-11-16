@@ -5,7 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
@@ -88,8 +87,10 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
         } else {
             Match item = getItem(position - 2);
             MatchContentViewHolder contentHolder = (MatchContentViewHolder) holder;
-            contentHolder.riv_match_item.setImageResource(item.getResource());
-            contentHolder.tv_match_name.setText(item.getName());
+            contentHolder.tv_match_title.setText(item.getTitle());
+            contentHolder.riv_match_item1.setImageResource(item.getThumb1());
+            contentHolder.riv_match_item2.setImageResource(item.getThumb2());
+            contentHolder.riv_match_item3.setImageResource(item.getThumb3());
             contentHolder.tv_match_description.setText(item.getDescrption());
         }
     }
@@ -135,11 +136,17 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
 
     public class MatchContentViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.riv_match_item)
-        RatioImageView riv_match_item;
+        @BindView(R.id.tv_match_title)
+        TextView tv_match_title;
 
-        @BindView(R.id.tv_match_name)
-        TextView tv_match_name;
+        @BindView(R.id.riv_match_item1)
+        RatioImageView riv_match_item1;
+
+        @BindView(R.id.riv_match_item2)
+        RatioImageView riv_match_item2;
+
+        @BindView(R.id.riv_match_item3)
+        RatioImageView riv_match_item3;
 
         @BindView(R.id.tv_match_description)
         TextView tv_match_description;
