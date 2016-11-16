@@ -9,6 +9,5 @@ package com.graduation.yinhua.maleambry.model.ItemType;
  */
 public enum MatchItemType {
     STYLE       //风格
-    , TITLE     //风格标题
     , CONTENT;  //内容
 }

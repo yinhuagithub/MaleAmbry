@@ -3,6 +3,7 @@ package com.graduation.yinhua.maleambry.adapter;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,6 +29,8 @@ import butterknife.ButterKnife;
  */
 public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHolder> {
 
+    private static final String TAG = MatchStyleAdapter.class.getSimpleName();
+    private static final int TYPE_COUNT = MatchItemType.values().length;
     private Context mContext;
     private MatchStyleAdapter mMatchStyleAdapter;
     private TextView tv_title;
@@ -37,8 +40,6 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
         mContext = parent.getContext();
         if(viewType == MatchItemType.STYLE.ordinal()) {
             return new MatchStyleViewHolder(inflateItemView(parent, R.layout.item_match_style));
-        } else if (viewType == MatchItemType.TITLE.ordinal()) {
-            return new MatchTitleViewHolder(inflateItemView(parent, R.layout.item_match_title));
         } else {
             return new MatchContentViewHolder(inflateItemView(parent, R.layout.item_match_content));
         }
@@ -46,7 +47,7 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return super.getItemCount() + 2;
+        return super.getItemCount() + TYPE_COUNT - 1;
     }
 
     @Override
@@ -54,8 +55,6 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
         int type;
         if(position ==  0) {
             type = MatchItemType.STYLE.ordinal();
-        } else if (position == 1) {
-            type = MatchItemType.TITLE.ordinal();
         } else {
             type = MatchItemType.CONTENT.ordinal();
         }
@@ -78,14 +77,12 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
                 styleHolder.rv_match_style.setAdapter(mMatchStyleAdapter);
             }
 
-        } else if (itemViewType == MatchItemType.TITLE.ordinal()) {
-            MatchTitleViewHolder titleHolder = (MatchTitleViewHolder) holder;
             if(tv_title == null) {
-                tv_title = titleHolder.tv_match_title;
+                tv_title = styleHolder.tv_match_title;
             }
-            titleHolder.tv_match_title.setText("精品搭配");
+            styleHolder.tv_match_title.setText("精品搭配");
         } else {
-            Match item = getItem(position - 2);
+            Match item = getItem(position - TYPE_COUNT + 1);
             MatchContentViewHolder contentHolder = (MatchContentViewHolder) holder;
             contentHolder.tv_match_title.setText(item.getTitle());
             contentHolder.riv_match_item1.setImageResource(item.getThumb1());
@@ -116,21 +113,13 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
         @BindView(R.id.rv_match_style)
         RecyclerView rv_match_style;
 
+        @BindView(R.id.tv_match_title)
+        TextView tv_match_title;
+
         public MatchStyleViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             rv_match_style.setLayoutManager(new GridLayoutManager(mContext, 4));
-        }
-    }
-
-    public class MatchTitleViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.tv_match_title)
-        TextView tv_match_title;
-
-        public MatchTitleViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
         }
     }
 
