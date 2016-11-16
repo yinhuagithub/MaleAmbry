@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="10dp"
+    android:background="@drawable/bg_shadow_item">
+
+    <com.graduation.yinhua.maleambry.view.widgets.RatioImageView
+        android:id="@+id/riv_match_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/man1" />
+
+    <TextView
+        android:id="@+id/tv_match_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/riv_match_item"
+        android:paddingBottom="8dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="8dp"
+        android:singleLine="true"
+        android:text="街头欧美搭"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/v_divider1"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_below="@id/tv_match_name"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/v_divider1">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:text="178" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_toStartOf="@+id/textView"
+            android:src="@mipmap/icon_mine_fav" />
+
+        <TextView
+            android:id="@+id/tv_match_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="￥227.00"
+            android:layout_toStartOf="@id/imageView"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/red_price"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</RelativeLayout>
