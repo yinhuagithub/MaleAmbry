@@ -22,6 +22,7 @@
     <declare-styleable name="RatioImageView">
         <attr name="origin_width" format="float"/>
         <attr name="origin_height" format="float"/>
+        <attr name="clip_height" format="float"/>
     </declare-styleable>
 
 </resources>

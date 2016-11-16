@@ -48,19 +48,21 @@
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:src="@mipmap/man2"
-                app:origin_height="1.475"
-                app:origin_width="1" />
+                app:origin_height="1.5"
+                app:origin_width="1"
+                app:clip_height="3"/>
 
             <com.graduation.yinhua.maleambry.view.widgets.RatioImageView
                 android:id="@+id/riv_match_item3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/riv_match_item2"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="6dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/man3"
-                app:origin_height="1.475"
-                app:origin_width="1" />
+                app:origin_height="1.5"
+                app:origin_width="1"
+                app:clip_height="3"/>
         </RelativeLayout>
     </LinearLayout>
 

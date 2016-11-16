@@ -2,7 +2,6 @@ package com.graduation.yinhua.maleambry.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.content.ContextCompat;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.model.MatchStyle;
