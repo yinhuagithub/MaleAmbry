@@ -43,6 +43,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     @BindView(R.id.rv_home)
     RecyclerView mRvHome;
 
+    private HomeAdapter mHomeAdapter;
 //    @BindView(R.id.vp_banner)
 //    ViewPager mVpBanner;
 //
@@ -52,12 +53,12 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
 //    private BannerAdapter mAdapter;
 //
 //    private List<String> mData = new ArrayList<>();
-//    private BannerTimerController mTimerController = new BannerTimerController(DEFAULT_INTERVAL) {
-//        @Override
-//        protected void onTick() {
-//            mAdapter.toNextItem(mVpBanner);
-//        }
-//    };
+    private BannerTimerController mTimerController = new BannerTimerController(DEFAULT_INTERVAL) {
+        @Override
+        protected void onTick() {
+            mHomeAdapter.toNextBanner();
+        }
+    };
 //
 //    private BannerAdapter.OnCurrentItemChangedListener mBannerListener = new BannerAdapter.OnCurrentItemChangedListener() {
 //        @Override
@@ -86,15 +87,15 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
 //        mData.add("http://image3.chelaile.net.cn/5393b01188a84f2886f498a3fa3ac819");
 //        mData.add("http://image3.chelaile.net.cn/2dcbcf8031114632a9c7a654b6a38b75");
 //        mData.add("http://image3.chelaile.net.cn/ce9c9c0ca23a4efbba622275a3e8a786");
-//        mTvTitle.setText(R.string.home);
+        mTvTitle.setText(R.string.home);
 //        mAdapter = new BannerAdapter(getContext());
 //        mAdapter.setOnCurrentItemChangedListener(mBannerListener);
 //        mVpBanner.setAdapter(mAdapter);
 //        mAdapter.updateData(mVpBanner, mData);
 
         mRvHome.setLayoutManager(new LinearLayoutManager(getContext()));
-        HomeAdapter mAdapter = new HomeAdapter();
-        mRvHome.setAdapter(mAdapter);
+        mHomeAdapter = new HomeAdapter();
+        mRvHome.setAdapter(mHomeAdapter);
     }
 
     @Override
@@ -110,13 +111,13 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     @Override
     public void onResume() {
         super.onResume();
-//        mTimerController.start();
+        mTimerController.start();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        mTimerController.cancel();
+        mTimerController.cancel();
     }
 
 }

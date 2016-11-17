@@ -128,7 +128,7 @@ public class BannerAdapter extends PagerAdapter {
             imageView = mImageCacheList.pop();
         }
 
-        Picasso.with(mContext).load(url).into(imageView);
+        Picasso.with(mContext).load(url).placeholder(R.drawable.default_place_holder_banner).into(imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
