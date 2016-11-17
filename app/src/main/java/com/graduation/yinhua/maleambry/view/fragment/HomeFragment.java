@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.BannerAdapter;
 import com.graduation.yinhua.maleambry.adapter.HomeAdapter;
 import com.graduation.yinhua.maleambry.contract.HomeContract;
+import com.graduation.yinhua.maleambry.model.ItemType.HomeItemType;
 import com.graduation.yinhua.maleambry.presenter.HomePresenter;
 import com.graduation.yinhua.maleambry.view.base.BaseMVPFragment;
 import com.graduation.yinhua.maleambry.view.widgets.BannerTimerController;
@@ -44,7 +46,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     RecyclerView mRvHome;
 
     private HomeAdapter mHomeAdapter;
-    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
     private BannerTimerController mTimerController = new BannerTimerController(DEFAULT_INTERVAL) {
         @Override
         protected void onTick() {
@@ -63,9 +65,14 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
 
         mTvTitle.setText(R.string.home);
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
-//        linearLayoutManager.scrollToPosition(0);
-        mRvHome.setLayoutManager(linearLayoutManager);
+        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return mHomeAdapter.getItemViewType(position) == HomeItemType.SINGLE.ordinal() ? 1 : gridLayoutManager.getSpanCount();
+            }
+        });
+        mRvHome.setLayoutManager(gridLayoutManager);
         mHomeAdapter = new HomeAdapter();
         mRvHome.setAdapter(mHomeAdapter);
     }
@@ -84,7 +91,6 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     public void onResume() {
         super.onResume();
         mTimerController.start();
-        linearLayoutManager.scrollToPosition(0);
     }
 
     @Override

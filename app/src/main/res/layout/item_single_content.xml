@@ -13,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@mipmap/man1" />
+        android:src="@mipmap/man1"
+        app:origin_width="1"
+        app:origin_height="1.3"/>
 
     <TextView
         android:id="@+id/tv_match_name"
