@@ -44,36 +44,13 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     RecyclerView mRvHome;
 
     private HomeAdapter mHomeAdapter;
-//    @BindView(R.id.vp_banner)
-//    ViewPager mVpBanner;
-//
-//    @BindView(R.id.ll_dots)
-//    LinearLayout mLlDots;
-
-//    private BannerAdapter mAdapter;
-//
-//    private List<String> mData = new ArrayList<>();
+    private LinearLayoutManager linearLayoutManager;
     private BannerTimerController mTimerController = new BannerTimerController(DEFAULT_INTERVAL) {
         @Override
         protected void onTick() {
             mHomeAdapter.toNextBanner();
         }
     };
-//
-//    private BannerAdapter.OnCurrentItemChangedListener mBannerListener = new BannerAdapter.OnCurrentItemChangedListener() {
-//        @Override
-//        public void onCurrentItemChanged(int currentItem) {
-//            int childCount = mLlDots.getChildCount();
-//            for (int index = 0; index < childCount; index++) {
-//                ImageView iv = (ImageView)mLlDots.getChildAt(index);
-//                if(index == currentItem - 1) {
-//                    iv.setEnabled(true);
-//                } else {
-//                    iv.setEnabled(false);
-//                }
-//            }
-//        }
-//    };
 
     @Override
     protected int getLayoutId() {
@@ -84,16 +61,11 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     protected void initWidgets() {
         super.initWidgets();
 
-//        mData.add("http://image3.chelaile.net.cn/5393b01188a84f2886f498a3fa3ac819");
-//        mData.add("http://image3.chelaile.net.cn/2dcbcf8031114632a9c7a654b6a38b75");
-//        mData.add("http://image3.chelaile.net.cn/ce9c9c0ca23a4efbba622275a3e8a786");
         mTvTitle.setText(R.string.home);
-//        mAdapter = new BannerAdapter(getContext());
-//        mAdapter.setOnCurrentItemChangedListener(mBannerListener);
-//        mVpBanner.setAdapter(mAdapter);
-//        mAdapter.updateData(mVpBanner, mData);
 
-        mRvHome.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+//        linearLayoutManager.scrollToPosition(0);
+        mRvHome.setLayoutManager(linearLayoutManager);
         mHomeAdapter = new HomeAdapter();
         mRvHome.setAdapter(mHomeAdapter);
     }
@@ -112,6 +84,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     public void onResume() {
         super.onResume();
         mTimerController.start();
+        linearLayoutManager.scrollToPosition(0);
     }
 
     @Override
