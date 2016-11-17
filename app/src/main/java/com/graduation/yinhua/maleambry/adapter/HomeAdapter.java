@@ -61,7 +61,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return TYPE_COUNT;
+        return super.getItemCount() + TYPE_COUNT;
     }
 
     @Override
