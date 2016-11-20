@@ -11,6 +11,45 @@
     <string name="home_match_title">潮流搭配</string>
     <string name="home_single_title">今日精选</string>
 
+    <string name="single_indicator_tops">上衣</string>
+    <string name="single_indicator_pants">裤子</string>
+    <string name="single_indicator_shoes">鞋子</string>
+    <string name="single_indicator_accessory">配饰</string>
+
+    <string name="single_tops_jacket">夹克</string>
+    <string name="single_tops_fleece">卫衣</string>
+    <string name="single_tops_sweater">毛衣</string>
+    <string name="single_tops_down">羽绒服</string>
+    <string name="single_tops_sport">运动服</string>
+    <string name="single_tops_wind">风衣</string>
+    <string name="single_tops_long_sleeved">长袖T恤</string>
+    <string name="single_tops_long_sleeve">长袖衬衫</string>
+    <string name="single_tops_chaqueta">牛仔外套</string>
+    <string name="single_tops_short_sleeve">短袖衬衫</string>
+    <string name="single_tops_short_sleeved">短袖T恤</string>
+
+    <string name="single_pants_casual">休闲裤</string>
+    <string name="single_pants_jeans">牛仔裤</string>
+    <string name="single_pants_sport">运动裤</string>
+    <string name="single_pants_pencil">小脚裤</string>
+    <string name="single_pants_harem">哈伦裤</string>
+    <string name="single_pants_cropped">九/七分裤</string>
+    <string name="single_pants_short">短裤</string>
+
+    <string name="single_shoes_board">板鞋</string>
+    <string name="single_shoes_canvas">帆布鞋</string>
+    <string name="single_shoes_sport">运动鞋</string>
+    <string name="single_shoes_doug">豆豆鞋</string>
+    <string name="single_shoes_high">高帮鞋</string>
+    <string name="single_shoes_ugg">男靴</string>
+
+    <string name="single_accessory_watch">手表</string>
+    <string name="single_accessory_sunglasses">墨镜</string>
+    <string name="single_accessory_belt">腰带</string>
+    <string name="single_accessory_bracelet">手链</string>
+    <string name="single_accessory_cap">帽子</string>
+    <string name="single_accessory_tie">领带/领结</string>
+
     <string name="xiuxian">休闲</string>
     <string name="shangwu">商务</string>
     <string name="yundong">运动</string>

@@ -54,11 +54,6 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
         }
     };
 
-    /**
-     * Discovery
-     */
-    private DiscoveryAdapter mDiscoveryAdapter;
-
     @Override
     public int getItemCount() {
         return super.getItemCount() + TYPE_COUNT;
