@@ -11,15 +11,16 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="20dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/default_user_avatar"/>
 
         <TextView
+            android:id="@+id/tv_user_nick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_marginTop="10dp"
             android:singleLine="true"
-            android:text="不会飞的鹅" />
+            android:text="@string/visitor" />
 
 </LinearLayout>

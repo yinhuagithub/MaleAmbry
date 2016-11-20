@@ -4,11 +4,14 @@
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <color name="colorPrimary">#00B4C8</color>
     <color name="colorPrimaryDark">#00B4C8</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#00B4C8</color>
+    <color name="theme_background">#f3f3f3</color>
+
     <color name="white">#ffffffff</color>
     <color name="transparent">#00000000</color>
     <color name="bg_gray">#ffebebeb</color>
     <color name="light_grey">#E0DCDC</color>
     <color name="mine_item_text_color">#3E3E3E</color>
     <color name="red_price">#FF0000</color>
+    <color name="stroke_line">#bdbdbd</color>
 </resources>

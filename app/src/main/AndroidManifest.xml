@@ -23,6 +23,9 @@
 
         <!--主界面-->
         <activity android:name=".view.activity.MainActivity"></activity>
+
+        <!--登录界面-->
+        <activity android:name=".view.activity.LoginActivity"></activity>
     </application>
 
 </manifest>
