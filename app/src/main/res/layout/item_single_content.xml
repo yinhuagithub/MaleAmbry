@@ -9,7 +9,7 @@
     android:background="@drawable/bg_shadow_item">
 
     <com.graduation.yinhua.maleambry.view.widgets.RatioImageView
-        android:id="@+id/riv_match_item"
+        android:id="@+id/riv_single_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
@@ -18,10 +18,10 @@
         app:origin_height="1.3"/>
 
     <TextView
-        android:id="@+id/tv_match_name"
+        android:id="@+id/tv_single_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/riv_match_item"
+        android:layout_below="@id/riv_single_item"
         android:paddingBottom="8dp"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
@@ -35,7 +35,7 @@
         android:id="@+id/v_divider1"
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
-        android:layout_below="@id/tv_match_name"
+        android:layout_below="@id/tv_single_name"
         android:background="@android:color/darker_gray" />
 
     <RelativeLayout
@@ -47,7 +47,7 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_single_fav_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -56,19 +56,19 @@
             android:text="178" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_single_fav"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_toStartOf="@+id/textView"
+            android:layout_toStartOf="@+id/tv_single_fav_count"
             android:src="@mipmap/icon_mine_fav" />
 
         <TextView
-            android:id="@+id/tv_match_description"
+            android:id="@+id/tv_single_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="￥227.00"
-            android:layout_toStartOf="@id/imageView"
+            android:layout_toStartOf="@id/iv_single_fav"
             android:layout_marginStart="5dp"
             android:textColor="@color/red_price"
             android:textSize="14sp" />

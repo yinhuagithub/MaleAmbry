@@ -8,7 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.SingleStyleAdapter;
 import com.graduation.yinhua.maleambry.model.ItemType.SingleItemType;
+import com.graduation.yinhua.maleambry.model.Single;
 import com.graduation.yinhua.maleambry.view.base.BaseLazyLoaderFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -66,6 +70,37 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment {
         });
         mRlSingleStyle.setLayoutManager(gridLayoutManager);
         mRlSingleStyle.setAdapter(mSingleStyleAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        List<Single> list = new ArrayList<>();
+        Single item1 = new Single();
+        item1.setThumb(R.mipmap.man1);
+        item1.setTitle("街头欧美搭");
+        item1.setPrice(227.00);
+        item1.setIsfav(false);
+        item1.setFavCount(178);
+        list.add(item1);
+
+        Single item2 = new Single();
+        item2.setThumb(R.mipmap.man2);
+        item2.setTitle("日系棒球领棉帽");
+        item2.setPrice(115.00);
+        item2.setIsfav(false);
+        item2.setFavCount(493);
+        list.add(item2);
+
+        Single item3 = new Single();
+        item3.setThumb(R.mipmap.man3);
+        item3.setTitle("个性立领休闲棉服");
+        item3.setPrice(138.00);
+        item3.setIsfav(false);
+        item3.setFavCount(157);
+        list.add(item3);
+        mSingleStyleAdapter.addItems(list, true);
     }
 
     @Override

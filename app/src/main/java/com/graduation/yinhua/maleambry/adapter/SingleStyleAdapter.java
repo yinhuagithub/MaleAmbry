@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
@@ -15,6 +16,7 @@ import com.graduation.yinhua.maleambry.model.MatchStyle;
 import com.graduation.yinhua.maleambry.model.Single;
 import com.graduation.yinhua.maleambry.utils.MatchStyleUtil;
 import com.graduation.yinhua.maleambry.view.fragment.SingleStyleFragment;
+import com.graduation.yinhua.maleambry.view.widgets.RatioImageView;
 
 import java.util.List;
 
@@ -91,7 +93,13 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
             }
             setTitle(DEFAULT_TITLE);
         } else {
+            SingleStyleViewHolder singleStyleHolder = (SingleStyleViewHolder) holder;
 
+            Single item = getItem(position - TYPE_COUNT + 1);
+            singleStyleHolder.riv_single_item.setImageResource(item.getThumb());
+            singleStyleHolder.tv_single_name.setText(item.getTitle());
+            singleStyleHolder.tv_single_price.setText("" + item.getPrice());
+            singleStyleHolder.tv_single_fav_count.setText("" + item.getFavCount());
         }
     }
 
@@ -139,6 +147,21 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
     }
 
     public class SingleStyleViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.riv_single_item)
+        RatioImageView riv_single_item;
+
+        @BindView(R.id.tv_single_name)
+        TextView tv_single_name;
+
+        @BindView(R.id.tv_single_fav_count)
+        TextView tv_single_fav_count;
+
+        @BindView(R.id.iv_single_fav)
+        ImageView iv_single_fav;
+
+        @BindView(R.id.tv_single_price)
+        TextView tv_single_price;
 
         public SingleStyleViewHolder(View itemView) {
             super(itemView);
