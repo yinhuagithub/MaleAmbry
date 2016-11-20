@@ -98,8 +98,8 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
             Single item = getItem(position - TYPE_COUNT + 1);
             singleStyleHolder.riv_single_item.setImageResource(item.getThumb());
             singleStyleHolder.tv_single_name.setText(item.getTitle());
-            singleStyleHolder.tv_single_price.setText("" + item.getPrice());
             singleStyleHolder.tv_single_fav_count.setText("" + item.getFavCount());
+            singleStyleHolder.tv_single_price.setText("" + item.getPrice());
         }
     }
 
