@@ -1,8 +1,5 @@
 package com.graduation.yinhua.maleambry.view.activity;
 
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
@@ -12,13 +9,13 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * LoginActivity.java
+ * UserInfoActivity.java
  * Description:
  * <p/>
- * Created by yinhua on 2016/11/20.
+ * Created by yinhua on 2016/11/21.
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
-public class LoginActivity extends BaseActivity {
+public class UserInfoActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -30,18 +27,24 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_login;
+        return R.layout.activity_user_info;
     }
 
     @Override
     protected void initWidgets() {
         super.initWidgets();
-        mToolbarTitle.setText(R.string.login);
+        mToolbarTitle.setText(R.string.user_info);
     }
 
     @OnClick(R.id.iv_back)
     public void back() {
-        LoginActivity.this.finish();
+        UserInfoActivity.this.finish();
     }
 
+    @OnClick(R.id.tv_finish)
+    public void finish() {
+        //提交、保存数据
+
+        UserInfoActivity.this.finish();
+    }
 }

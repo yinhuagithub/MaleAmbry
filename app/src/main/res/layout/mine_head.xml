@@ -11,7 +11,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="20dp"
-            android:src="@mipmap/default_user_avatar"/>
+            android:src="@mipmap/avatar"/>
 
         <TextView
             android:id="@+id/tv_user_nick"

@@ -3,7 +3,21 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/center_toolbar" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <include layout="@layout/center_toolbar" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:src="@mipmap/back"/>
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -102,7 +116,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="5dp"
-            android:background="@drawable/bg_grey_stroke_line"
+            android:background="@drawable/bg_grey_stroke_line_with_radius"
             android:text="@string/register"/>
 
         <TextView

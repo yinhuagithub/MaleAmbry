@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.view.activity.LoginActivity;
+import com.graduation.yinhua.maleambry.view.activity.UserInfoActivity;
 import com.graduation.yinhua.maleambry.view.base.BaseFragment;
 
 import butterknife.BindView;
@@ -40,7 +41,8 @@ public class MineFragment extends BaseFragment {
 
     @OnClick(R.id.tv_user_nick)
     public void clickUserNick() {
-        loginAccount();
+//        loginAccount();
+        viewUserInfo();
     }
 
     /**
@@ -48,5 +50,12 @@ public class MineFragment extends BaseFragment {
      */
     private void loginAccount() {
         startActivity(new Intent(getContext(), LoginActivity.class));
+    }
+
+    /**
+     * 进入用户个人信息界面
+     */
+    private void viewUserInfo() {
+        startActivity(new Intent(getContext(), UserInfoActivity.class));
     }
 }

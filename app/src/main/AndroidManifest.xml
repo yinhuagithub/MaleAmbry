@@ -26,6 +26,9 @@
 
         <!--登录界面-->
         <activity android:name=".view.activity.LoginActivity"></activity>
+
+        <!--用户信息界面-->
+        <activity android:name=".view.activity.UserInfoActivity"></activity>
     </application>
 
 </manifest>

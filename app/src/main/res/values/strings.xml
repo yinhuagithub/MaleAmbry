@@ -72,4 +72,9 @@
     <string name="input_password">输入密码</string>
     <string name="user_protocol">用户协议</string>
     <string name="forget_password">忘记密码？</string>
+
+    <string name="user_info">用户信息</string>
+    <string name="user_info_finish">完成</string>
+    <string name="user_name">用户名</string>
+    <string name="user_phone">手机号</string>
 </resources>
