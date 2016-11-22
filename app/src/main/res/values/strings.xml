@@ -96,4 +96,6 @@
     <string name="hint_input_old_password">请输入旧密码</string>
     <string name="hint_input_new_password">请输入新密码</string>
     <string name="hint_reinput_new_password">请再次输入新密码</string>
+
+    <string name="about">关于</string>
 </resources>

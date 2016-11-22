@@ -73,7 +73,7 @@ public class SettingActivity extends BaseActivity {
         mRlAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(SettingActivity.this, AboutActivity.class));
             }
         });
 
