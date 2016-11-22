@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.view.activity.FeedBackActivity;
 import com.graduation.yinhua.maleambry.view.activity.LoginActivity;
+import com.graduation.yinhua.maleambry.view.activity.SettingActivity;
 import com.graduation.yinhua.maleambry.view.activity.UserInfoActivity;
 import com.graduation.yinhua.maleambry.view.base.BaseFragment;
 
@@ -43,6 +45,16 @@ public class MineFragment extends BaseFragment {
     public void clickUserNick() {
 //        loginAccount();
         viewUserInfo();
+    }
+
+    @OnClick(R.id.rl_mine_feedback)
+    public void feedback() {
+        startActivity(new Intent(getContext(), FeedBackActivity.class));
+    }
+
+    @OnClick(R.id.rl_mine_settings)
+    public void setting() {
+        startActivity(new Intent(getContext(), SettingActivity.class));
     }
 
     /**

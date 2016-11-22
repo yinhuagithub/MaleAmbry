@@ -68,8 +68,8 @@
     <string name="register">注册</string>
     <string name="account">账号</string>
     <string name="password">密码</string>
-    <string name="input_phone">输入手机号码</string>
-    <string name="input_password">输入密码</string>
+    <string name="hint_input_phone">输入手机号码</string>
+    <string name="hint_input_password">输入密码</string>
     <string name="user_protocol">用户协议</string>
     <string name="forget_password">忘记密码？</string>
 
@@ -77,4 +77,23 @@
     <string name="user_info_finish">完成</string>
     <string name="user_name">用户名</string>
     <string name="user_phone">手机号</string>
+    
+    <string name="user_feedback">用户反馈</string>
+    <string name="contract_info">联系方式</string>
+    <string name="hint_contract_info">QQ/Email/电话</string>
+    <string name="hint_feedback">反馈内容</string>
+    <string name="confirm">确定</string>
+
+    <string name="setting">设置</string>
+    <string name="modify_account_password">修改账户密码</string>
+    <string name="about_male_ambry">关于男衣橱</string>
+    <string name="quit_current_account">退出当前账户</string>
+
+    <string name="modify_password">修改密码</string>
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
+    <string name="confirm_password">确              认</string>
+    <string name="hint_input_old_password">请输入旧密码</string>
+    <string name="hint_input_new_password">请输入新密码</string>
+    <string name="hint_reinput_new_password">请再次输入新密码</string>
 </resources>

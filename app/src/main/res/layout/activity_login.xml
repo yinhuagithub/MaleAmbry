@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textSize="14sp"
-            android:hint="@string/input_phone"
+            android:hint="@string/hint_input_phone"
             android:background="@color/white"/>
     </LinearLayout>
 
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:hint="@string/input_password"
+            android:hint="@string/hint_input_password"
             android:textSize="14sp"
             android:background="@color/white"/>
     </LinearLayout>

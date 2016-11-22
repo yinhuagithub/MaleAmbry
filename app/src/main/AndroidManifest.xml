@@ -29,6 +29,15 @@
 
         <!--用户信息界面-->
         <activity android:name=".view.activity.UserInfoActivity"></activity>
+
+        <!--用户反馈界面-->
+        <activity android:name=".view.activity.FeedBackActivity"></activity>
+
+        <!--我的设置界面-->
+        <activity android:name=".view.activity.SettingActivity"></activity>
+
+        <!--修改密码页面-->
+        <activity android:name=".view.activity.ModifyPasswordActivity"></activity>
     </application>
 
 </manifest>
