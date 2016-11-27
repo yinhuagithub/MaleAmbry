@@ -14,7 +14,12 @@ import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.BannerAdapter;
 import com.graduation.yinhua.maleambry.adapter.HomeAdapter;
 import com.graduation.yinhua.maleambry.contract.HomeContract;
+import com.graduation.yinhua.maleambry.model.Discovery;
 import com.graduation.yinhua.maleambry.model.ItemType.HomeItemType;
+import com.graduation.yinhua.maleambry.model.Single;
+import com.graduation.yinhua.maleambry.model.StatusCode;
+import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
+import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.presenter.HomePresenter;
 import com.graduation.yinhua.maleambry.view.base.BaseMVPFragment;
 import com.graduation.yinhua.maleambry.view.widgets.BannerTimerController;
@@ -23,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * HomeFragment.java
@@ -37,7 +45,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     /**
      * 图片轮播默认的时间间隔
      */
-    private static final int DEFAULT_INTERVAL = 3000;
+    private static final int DEFAULT_INTERVAL = 5000;
 
     @BindView(R.id.toolbar_title)
     TextView mTvTitle;
@@ -45,6 +53,8 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
     @BindView(R.id.rv_home)
     RecyclerView mRvHome;
 
+    private boolean mLoadingMore = true;
+    private boolean mRefreshing = false;
     private HomeAdapter mHomeAdapter;
     private GridLayoutManager gridLayoutManager;
     private BannerTimerController mTimerController = new BannerTimerController(DEFAULT_INTERVAL) {
@@ -84,7 +94,11 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
-
+        if(isVisible) {
+            if(mLoadingMore) {
+                fetchRecommandSingleByNet();
+            }
+        }
     }
 
     @Override
@@ -99,4 +113,28 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
         mTimerController.cancel();
     }
 
+    /**
+     * 获取今日精选信息
+     */
+    private void fetchRecommandSingleByNet() {
+        MaleAmbryRetrofit.getInstance().getRecommandSingle()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<List<Single>>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(ResponseMessage<List<Single>> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                            mHomeAdapter.addItems(responseMessage.getResults(), true);
+                            mLoadingMore = false;
+                        }
+                    }
+                });
+    }
 }

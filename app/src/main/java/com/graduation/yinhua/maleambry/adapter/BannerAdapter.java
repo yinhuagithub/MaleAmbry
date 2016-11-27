@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.model.Banner;
+import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,7 +28,8 @@ import java.util.List;
 public class BannerAdapter extends PagerAdapter {
 
     private Context mContext;
-    private List<String> mImageUrlList = new ArrayList<>();
+//    private List<String> mImageUrlList = new ArrayList<>();
+    private List<Banner> mBannerList = new ArrayList<>();
     private LinkedList<ImageView> mImageCacheList = new LinkedList<>();
 
     private OnCurrentItemChangedListener mOnCurrentItemChangedListener;
@@ -35,8 +38,8 @@ public class BannerAdapter extends PagerAdapter {
         this.mContext = context;
     }
 
-    public void updateData(final ViewPager viewPager, List<String> imageUrlList) {
-        this.mImageUrlList = imageUrlList;
+    public void updateData(final ViewPager viewPager, List<Banner> bannerList) {
+        this.mBannerList = bannerList;
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
@@ -83,7 +86,7 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mImageUrlList.isEmpty() ? 0 : mImageUrlList.size() + 2;
+        return mBannerList.isEmpty() ? 0 : mBannerList.size() + 2;
     }
 
     @Override
@@ -95,11 +98,11 @@ public class BannerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         int realIndex = position - 1;
         if (position == 0) {
-            realIndex = mImageUrlList.size() - 1;
+            realIndex = mBannerList.size() - 1;
         } else if (position == getCount() - 1) {
             realIndex = 0;
         }
-        final String url = mImageUrlList.get(realIndex);
+        final String url = MaleAmbryRetrofit.BASE_IMAGE_URL + mBannerList.get(realIndex).getThumbnail();
 
         ImageView imageView = initImageView(url);
 

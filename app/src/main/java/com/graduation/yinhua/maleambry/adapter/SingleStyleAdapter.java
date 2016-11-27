@@ -17,6 +17,7 @@ import com.graduation.yinhua.maleambry.model.Single;
 import com.graduation.yinhua.maleambry.utils.MatchStyleUtil;
 import com.graduation.yinhua.maleambry.view.fragment.SingleStyleFragment;
 import com.graduation.yinhua.maleambry.view.widgets.RatioImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -96,9 +97,9 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
             SingleStyleViewHolder singleStyleHolder = (SingleStyleViewHolder) holder;
 
             Single item = getItem(position - TYPE_COUNT + 1);
-            singleStyleHolder.riv_single_item.setImageResource(item.getThumb());
+            Picasso.with(mContext).load(item.getThumb_url()).into(singleStyleHolder.riv_single_item);
             singleStyleHolder.tv_single_name.setText(item.getTitle());
-            singleStyleHolder.tv_single_fav_count.setText("" + item.getFavCount());
+            singleStyleHolder.tv_single_fav_count.setText("" + item.getFavorite_count());
             singleStyleHolder.tv_single_price.setText("" + item.getPrice());
         }
     }

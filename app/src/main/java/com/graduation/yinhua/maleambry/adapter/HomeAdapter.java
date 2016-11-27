@@ -1,24 +1,38 @@
 package com.graduation.yinhua.maleambry.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.listeners.IObtainDataListener;
+import com.graduation.yinhua.maleambry.model.Banner;
 import com.graduation.yinhua.maleambry.model.Discovery;
 import com.graduation.yinhua.maleambry.model.ItemType.HomeItemType;
+import com.graduation.yinhua.maleambry.model.Match;
+import com.graduation.yinhua.maleambry.model.Single;
+import com.graduation.yinhua.maleambry.model.StatusCode;
+import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
+import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.view.widgets.RatioImageView;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * HomeAdapter.java
@@ -27,7 +41,7 @@ import butterknife.ButterKnife;
  * Created by yinhua on 2016/11/16.
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
-public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHolder> {
+public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHolder> {
 
     private static final int TYPE_COUNT = HomeItemType.values().length;
 
@@ -56,7 +70,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return super.getItemCount() + TYPE_COUNT;
+        return super.getItemCount() + TYPE_COUNT - 1;
     }
 
     @Override
@@ -97,7 +111,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
         } else if (itemViewType == HomeItemType.SINGLE_TITLE.ordinal()) {
             bindDataToSingleTitleView((HomeSingleTitleViewHolder)holder);
         } else {
-            bindDataToSingleView((HomeSingleViewHolder)holder);
+            bindDataToSingleView((HomeSingleViewHolder)holder, position);
         }
     }
 
@@ -112,7 +126,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
             mBannerAdapter = new BannerAdapter(mContext);
             mBannerAdapter.setOnCurrentItemChangedListener(mBannerListener);
             item.vp_banner.setAdapter(mBannerAdapter);
-            mBannerAdapter.updateData(item.vp_banner, fetchBannerByNet());
+            fetchBannerByNet(item.vp_banner);
         }
     }
 
@@ -120,29 +134,65 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
      * 绑定数据到HomeDiscoveryWithTitle视图
      * @param holder
      */
-    public void bindDataToDiscoveryWithTitleView(HomeDiscoveryWithTitleViewHolder holder) {
-        holder.tv_match_title.setText(R.string.home_discovery_title);
+    public void bindDataToDiscoveryWithTitleView(final HomeDiscoveryWithTitleViewHolder holder) {
+        holder.tv_title.setText(R.string.home_discovery_title);
+        fetchDiscoveryByNet(0, new IObtainDataListener<Discovery>() {
+            @Override
+            public void obtainData(Discovery discovery) {
+                holder.tv_discovery_title.setText(discovery.getTitle());
+                Picasso.with(mContext).load(discovery.getThumb()).into(holder.riv_discovery_thumb);
+                holder.tv_discovery_viewed.setText("" + discovery.getViewed());
+            }
+        });
     }
 
     /**
      * 绑定数据到Discovery视图
      * @param holder
      */
-    private void bindDataToDiscoveryView(HomeDiscoveryViewHolder holder) {
+    private void bindDataToDiscoveryView(final HomeDiscoveryViewHolder holder) {
+        fetchDiscoveryByNet(1, new IObtainDataListener<Discovery>() {
+            @Override
+            public void obtainData(Discovery discovery) {
+                holder.tv_discovery_title.setText(discovery.getTitle());
+                Picasso.with(mContext).load(discovery.getThumb()).into(holder.riv_discovery_thumb);
+                holder.tv_discovery_viewed.setText("" + discovery.getViewed());
+            }
+        });
     }
 
     /**
      * 绑定数据到MatchWithTitle视图
      * @param holder
      */
-    public void bindDataToMatchWithTitleView(HomeMatchWithTitleViewHolder holder) {
+    public void bindDataToMatchWithTitleView(final HomeMatchWithTitleViewHolder holder) {
         holder.tv_match_title.setText(R.string.home_match_title);
+        fetchMatchByNet(0, new IObtainDataListener<Match>() {
+            @Override
+            public void obtainData(Match match) {
+                holder.tv_match_title.setText(match.getTitle());
+                Picasso.with(mContext).load(match.getThumb_url()).into(holder.riv_match_item1);
+                Picasso.with(mContext).load(match.getThumb1()).into(holder.riv_match_item2);
+                Picasso.with(mContext).load(match.getThumb2()).into(holder.riv_match_item3);
+                holder.tv_match_description.setText(match.getDescription());
+            }
+        });
     }
     /**
      * 绑定数据到Match视图
      * @param holder
      */
-    private void bindDataToMatchView(HomeMatchViewHolder holder) {
+    private void bindDataToMatchView(final HomeMatchViewHolder holder) {
+        fetchMatchByNet(1, new IObtainDataListener<Match>() {
+            @Override
+            public void obtainData(Match match) {
+                holder.tv_match_title.setText(match.getTitle());
+                Picasso.with(mContext).load(match.getThumb_url()).into(holder.riv_match_item1);
+                Picasso.with(mContext).load(match.getThumb1()).into(holder.riv_match_item2);
+                Picasso.with(mContext).load(match.getThumb2()).into(holder.riv_match_item3);
+                holder.tv_match_description.setText(match.getDescription());
+            }
+        });
     }
 
     /**
@@ -150,25 +200,44 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
      * @param holder
      */
     private void bindDataToSingleTitleView(HomeSingleTitleViewHolder holder) {
-        holder.tv_match_title.setText(R.string.home_single_title);
+        holder.tv_title.setText(R.string.home_single_title);
     }
 
     /**
      * 绑定数据到Single视图
      * @param holder
      */
-    private void bindDataToSingleView(HomeSingleViewHolder holder) {
+    private void bindDataToSingleView(HomeSingleViewHolder holder, int position) {
+        Single single = getItem(position - TYPE_COUNT + 1);
+        Picasso.with(mContext).load(single.getThumb_url()).into(holder.riv_single_item);
+        holder.tv_single_name.setText(single.getTitle());
+        holder.tv_single_price.setText("" + single.getPrice());
+        holder.tv_single_fav_count.setText("" + single.getFavorite_count());
     }
 
     /**
      * 获取banner数据
      */
-    private List<String> fetchBannerByNet() {
-        List<String> bannerLists = new ArrayList<>();
-        bannerLists.add("http://image3.chelaile.net.cn/5393b01188a84f2886f498a3fa3ac819");
-        bannerLists.add("http://image3.chelaile.net.cn/2dcbcf8031114632a9c7a654b6a38b75");
-        bannerLists.add("http://image3.chelaile.net.cn/ce9c9c0ca23a4efbba622275a3e8a786");
-        return bannerLists;
+    private void fetchBannerByNet(final ViewPager viewPager) {
+        MaleAmbryRetrofit.getInstance().getBanner()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<List<Banner>>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(MaleAmbryApp.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(ResponseMessage<List<Banner>> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                            mBannerAdapter.updateData(viewPager, responseMessage.getResults());
+                        }
+                    }
+                });
     }
 
     /**
@@ -178,6 +247,60 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
         if(mBannerAdapter != null && mVpBanner != null) {
             mBannerAdapter.toNextItem(mVpBanner);
         }
+    }
+
+    /**
+     * 获取discovery数据
+     */
+    private void fetchDiscoveryByNet(int page, final IObtainDataListener<Discovery> listener) {
+        MaleAmbryRetrofit.getInstance().getRecommandDiscovery(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<Discovery>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(MaleAmbryApp.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(ResponseMessage<Discovery> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                            if(listener != null) {
+                                listener.obtainData(responseMessage.getResults());
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 获取discovery数据
+     */
+    private void fetchMatchByNet(int page, final IObtainDataListener<Match> listener) {
+        MaleAmbryRetrofit.getInstance().getRecommandMatch(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<Match>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(MaleAmbryApp.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(ResponseMessage<Match> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                            if(listener != null) {
+                                listener.obtainData(responseMessage.getResults());
+                            }
+                        }
+                    }
+                });
     }
 
     @Override
@@ -215,8 +338,17 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
 
     public class HomeDiscoveryWithTitleViewHolder extends HomeDiscoveryViewHolder {
 
-        @BindView(R.id.tv_match_title)
-        TextView tv_match_title;
+        @BindView(R.id.tv_title)
+        TextView tv_title;
+
+        @BindView(R.id.tv_discovery_title)
+        TextView tv_discovery_title;
+
+        @BindView(R.id.riv_discovery_thumb)
+        RatioImageView riv_discovery_thumb;
+
+        @BindView(R.id.tv_discovery_viewed)
+        TextView tv_discovery_viewed;
 
         public HomeDiscoveryWithTitleViewHolder(View itemView) {
             super(itemView);
@@ -226,6 +358,15 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
 
     public class HomeDiscoveryViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.tv_discovery_title)
+        TextView tv_discovery_title;
+
+        @BindView(R.id.riv_discovery_thumb)
+        RatioImageView riv_discovery_thumb;
+
+        @BindView(R.id.tv_discovery_viewed)
+        TextView tv_discovery_viewed;
+
         public HomeDiscoveryViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -234,8 +375,23 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
 
     public class HomeMatchWithTitleViewHolder extends HomeMatchViewHolder {
 
+        @BindView(R.id.tv_title)
+        TextView tv_title;
+
         @BindView(R.id.tv_match_title)
         TextView tv_match_title;
+
+        @BindView(R.id.riv_match_item1)
+        RatioImageView riv_match_item1;
+
+        @BindView(R.id.riv_match_item2)
+        RatioImageView riv_match_item2;
+
+        @BindView(R.id.riv_match_item3)
+        RatioImageView riv_match_item3;
+
+        @BindView(R.id.tv_match_description)
+        TextView tv_match_description;
 
         public HomeMatchWithTitleViewHolder(View itemView) {
             super(itemView);
@@ -245,6 +401,21 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
 
     public class HomeMatchViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.tv_match_title)
+        TextView tv_match_title;
+
+        @BindView(R.id.riv_match_item1)
+        RatioImageView riv_match_item1;
+
+        @BindView(R.id.riv_match_item2)
+        RatioImageView riv_match_item2;
+
+        @BindView(R.id.riv_match_item3)
+        RatioImageView riv_match_item3;
+
+        @BindView(R.id.tv_match_description)
+        TextView tv_match_description;
+
         public HomeMatchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -253,8 +424,8 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
 
     public class HomeSingleTitleViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_match_title)
-        TextView tv_match_title;
+        @BindView(R.id.tv_title)
+        TextView tv_title;
 
         public HomeSingleTitleViewHolder(View itemView) {
             super(itemView);
@@ -263,6 +434,21 @@ public class HomeAdapter extends BaseRecyclerAdapter<String, RecyclerView.ViewHo
     }
 
     public class HomeSingleViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.riv_single_item)
+        RatioImageView riv_single_item;
+
+        @BindView(R.id.tv_single_name)
+        TextView tv_single_name;
+
+        @BindView(R.id.tv_single_price)
+        TextView tv_single_price;
+
+        @BindView(R.id.iv_single_fav)
+        ImageView iv_single_fav;
+
+        @BindView(R.id.tv_single_fav_count)
+        TextView tv_single_fav_count;
 
         public HomeSingleViewHolder(View itemView) {
             super(itemView);

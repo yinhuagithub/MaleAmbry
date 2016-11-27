@@ -78,27 +78,24 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment {
 
         List<Single> list = new ArrayList<>();
         Single item1 = new Single();
-        item1.setThumb(R.mipmap.man1);
+        item1.setThumb_url("https://gd1.alicdn.com/imgextra/i3/1706946819/TB287R.aM1J.eBjy0FaXXaXeVXa_!!1706946819.jpg_800x800.jpg");
         item1.setTitle("街头欧美搭");
         item1.setPrice(227.00);
-        item1.setIsfav(false);
-        item1.setFavCount(178);
+        item1.setFavorite_count(178);
         list.add(item1);
 
         Single item2 = new Single();
-        item2.setThumb(R.mipmap.man2);
+        item2.setThumb_url("https://gd1.alicdn.com/imgextra/i3/1706946819/TB287R.aM1J.eBjy0FaXXaXeVXa_!!1706946819.jpg_800x800.jpg");
         item2.setTitle("日系棒球领棉帽");
         item2.setPrice(115.00);
-        item2.setIsfav(false);
-        item2.setFavCount(493);
+        item2.setFavorite_count(493);
         list.add(item2);
 
         Single item3 = new Single();
-        item3.setThumb(R.mipmap.man3);
+        item3.setThumb_url("https://gd1.alicdn.com/imgextra/i3/1706946819/TB287R.aM1J.eBjy0FaXXaXeVXa_!!1706946819.jpg_800x800.jpg");
         item3.setTitle("个性立领休闲棉服");
         item3.setPrice(138.00);
-        item3.setIsfav(false);
-        item3.setFavCount(157);
+        item3.setFavorite_count(1157);
         list.add(item3);
         mSingleStyleAdapter.addItems(list, true);
     }

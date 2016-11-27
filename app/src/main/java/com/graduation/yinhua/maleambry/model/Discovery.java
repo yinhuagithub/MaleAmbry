@@ -1,5 +1,8 @@
 package com.graduation.yinhua.maleambry.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Discovery.java
  * Description:
@@ -9,10 +12,33 @@ package com.graduation.yinhua.maleambry.model;
  */
 public class Discovery {
 
+    @SerializedName("did")
+    @Expose
+    private int did;
+
+    @SerializedName("title")
+    @Expose
     private String title;
+
+    @SerializedName("thumb_url")
+    @Expose
     private String thumb;
+
+    @SerializedName("viewed")
+    @Expose
     private int viewed;
+
+    @SerializedName("detail_url")
+    @Expose
     private String detail_url;
+
+    public int getDid() {
+        return did;
+    }
+
+    public void setDid(int did) {
+        this.did = did;
+    }
 
     public String getTitle() {
         return title;

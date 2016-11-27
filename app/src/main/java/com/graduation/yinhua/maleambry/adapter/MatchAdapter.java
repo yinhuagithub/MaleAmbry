@@ -79,17 +79,17 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
             }
 
             if(tv_title == null) {
-                tv_title = styleHolder.tv_match_title;
+                tv_title = styleHolder.tv_title;
             }
             setTitle(DEFAULT_TITLE);
         } else {
             Match item = getItem(position - TYPE_COUNT + 1);
             MatchContentViewHolder contentHolder = (MatchContentViewHolder) holder;
             contentHolder.tv_match_title.setText(item.getTitle());
-            contentHolder.riv_match_item1.setImageResource(item.getThumb1());
-            contentHolder.riv_match_item2.setImageResource(item.getThumb2());
-            contentHolder.riv_match_item3.setImageResource(item.getThumb3());
-            contentHolder.tv_match_description.setText(item.getDescrption());
+//            contentHolder.riv_match_item1.setImageResource(item.getThumb1());
+//            contentHolder.riv_match_item2.setImageResource(item.getThumb2());
+//            contentHolder.riv_match_item3.setImageResource(item.getThumb3());
+            contentHolder.tv_match_description.setText(item.getDescription());
         }
     }
 
@@ -127,8 +127,8 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
         @BindView(R.id.rv_match_style)
         RecyclerView rv_match_style;
 
-        @BindView(R.id.tv_match_title)
-        TextView tv_match_title;
+        @BindView(R.id.tv_title)
+        TextView tv_title;
 
         public MatchStyleViewHolder(View itemView) {
             super(itemView);

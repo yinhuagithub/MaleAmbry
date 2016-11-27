@@ -1,5 +1,8 @@
 package com.graduation.yinhua.maleambry.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Single.java
  * Description:
@@ -8,18 +11,57 @@ package com.graduation.yinhua.maleambry.model;
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
 public class Single {
-    private int thumb;
-    private String title;
-    private double price;
-    private boolean isfav;
-    private int favCount;
 
-    public int getThumb() {
-        return thumb;
+    @SerializedName("sid")
+    @Expose
+    private int sid;
+
+    @SerializedName("type")
+    @Expose
+    private int type;
+
+    @SerializedName("thumb_url")
+    @Expose
+    private String thumb_url;
+
+    @SerializedName("title")
+    @Expose
+    private String title;
+
+    @SerializedName("price")
+    @Expose
+    private double price;
+
+    @SerializedName("favorite_count")
+    @Expose
+    private int favorite_count;
+
+    @SerializedName("target_url")
+    @Expose
+    private String target_url;
+
+    public int getSid() {
+        return sid;
     }
 
-    public void setThumb(int thumb) {
-        this.thumb = thumb;
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getThumb_url() {
+        return thumb_url;
+    }
+
+    public void setThumb_url(String thumb_url) {
+        this.thumb_url = thumb_url;
     }
 
     public String getTitle() {
@@ -38,19 +80,19 @@ public class Single {
         this.price = price;
     }
 
-    public boolean isfav() {
-        return isfav;
+    public int getFavorite_count() {
+        return favorite_count;
     }
 
-    public void setIsfav(boolean isfav) {
-        this.isfav = isfav;
+    public void setFavorite_count(int favorite_count) {
+        this.favorite_count = favorite_count;
     }
 
-    public int getFavCount() {
-        return favCount;
+    public String getTarget_url() {
+        return target_url;
     }
 
-    public void setFavCount(int favCount) {
-        this.favCount = favCount;
+    public void setTarget_url(String target_url) {
+        this.target_url = target_url;
     }
 }

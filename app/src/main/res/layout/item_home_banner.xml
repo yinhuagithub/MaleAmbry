@@ -33,5 +33,17 @@
             android:layout_height="10dp"
             android:layout_marginStart="5dp"
             android:src="@drawable/dot" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/dot" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/dot" />
     </LinearLayout>
 </RelativeLayout>

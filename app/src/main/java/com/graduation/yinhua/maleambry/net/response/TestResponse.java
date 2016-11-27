@@ -11,7 +11,7 @@ import java.util.List;
  * Created by yinhua on 2016/11/8.
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
-public class TestResponse extends MaleAmbryResponse {
+public class TestResponse extends ResponseMessage {
 
     @SerializedName("results")
     private List<String> results;
