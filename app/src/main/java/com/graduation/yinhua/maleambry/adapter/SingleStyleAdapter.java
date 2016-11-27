@@ -90,7 +90,7 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
             }
 
             if(tv_title == null) {
-                tv_title = styleHolder.tv_match_title;
+                tv_title = styleHolder.tv_title;
             }
             setTitle(DEFAULT_TITLE);
         } else {
@@ -124,7 +124,7 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
         if(itemViewType == SingleItemType.STYLE.ordinal() && mMatchStyleAdapter != null) {
             mMatchStyleAdapter.addOnItemClickListener(new MatchStyleAdapter.OnMatchStyleSelectedListener() {
                 @Override
-                public void onSelected(String name) {
+                public void onSelected(int position, String name) {
                     SingleStyleAdapter.this.mTitle = name;
                     setTitle(name);
                 }
@@ -137,8 +137,8 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
         @BindView(R.id.rv_match_style)
         RecyclerView rv_match_style;
 
-        @BindView(R.id.tv_match_title)
-        TextView tv_match_title;
+        @BindView(R.id.tv_title)
+        TextView tv_title;
 
         public StyleViewHolder(View itemView) {
             super(itemView);

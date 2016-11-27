@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.listeners.IStyleChangeListener;
 import com.graduation.yinhua.maleambry.model.ItemType.MatchItemType;
 import com.graduation.yinhua.maleambry.model.Match;
 import com.graduation.yinhua.maleambry.model.MatchStyle;
 import com.graduation.yinhua.maleambry.utils.MatchStyleUtil;
+import com.graduation.yinhua.maleambry.view.fragment.MatchFragment;
 import com.graduation.yinhua.maleambry.view.widgets.RatioImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,6 +40,15 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
     private MatchStyleAdapter mMatchStyleAdapter;
     private TextView tv_title;
     private String mTitle;
+    private IStyleChangeListener styleChangeListener = null;
+
+    public MatchAdapter(MatchFragment context) {
+        if(context instanceof IStyleChangeListener) {
+            styleChangeListener = context;
+        } else {
+            throw new RuntimeException(context.getClass().getSimpleName() + " should implement IStyleChangeListener.");
+        }
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -86,9 +98,9 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
             Match item = getItem(position - TYPE_COUNT + 1);
             MatchContentViewHolder contentHolder = (MatchContentViewHolder) holder;
             contentHolder.tv_match_title.setText(item.getTitle());
-//            contentHolder.riv_match_item1.setImageResource(item.getThumb1());
-//            contentHolder.riv_match_item2.setImageResource(item.getThumb2());
-//            contentHolder.riv_match_item3.setImageResource(item.getThumb3());
+            Picasso.with(mContext).load(item.getThumb_url()).into(contentHolder.riv_match_item1);
+            Picasso.with(mContext).load(item.getThumb2()).into(contentHolder.riv_match_item2);
+            Picasso.with(mContext).load(item.getThumb3()).into(contentHolder.riv_match_item3);
             contentHolder.tv_match_description.setText(item.getDescription());
         }
     }
@@ -102,9 +114,10 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
         if(itemViewType == MatchItemType.STYLE.ordinal() && mMatchStyleAdapter != null) {
             mMatchStyleAdapter.addOnItemClickListener(new MatchStyleAdapter.OnMatchStyleSelectedListener() {
                 @Override
-                public void onSelected(String name) {
+                public void onSelected(int position, String name) {
                     MatchAdapter.this.mTitle = name;
                     setTitle(name);
+                    styleChangeListener.changeStyle(position);
                 }
             });
         }

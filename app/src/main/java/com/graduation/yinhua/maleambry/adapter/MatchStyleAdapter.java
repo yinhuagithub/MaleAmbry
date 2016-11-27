@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -44,16 +45,16 @@ public class MatchStyleAdapter extends BaseRecyclerAdapter<MatchStyle, MatchStyl
 
         setOnItemClickListener(new OnItemClickListener<MatchStyle>() {
             @Override
-            public void onClick(MatchStyle item) {
+            public void onClick(int position, MatchStyle item) {
                 if(onMatchStyleSelectedListener != null) {
-                    onMatchStyleSelectedListener.onSelected(item.getStyleName());
+                    onMatchStyleSelectedListener.onSelected(position, item.getStyleName());
                 }
             }
         });
     }
 
     public interface OnMatchStyleSelectedListener{
-        void onSelected(String name);
+        void onSelected(int position, String name);
     }
 
     public void addOnItemClickListener(OnMatchStyleSelectedListener listener) {

@@ -53,7 +53,7 @@ public abstract class BaseRecyclerAdapter<D,V extends RecyclerView.ViewHolder> e
             @Override
             public void onClick(View v) {
                 if(mItemClickListener != null) {
-                    mItemClickListener.onClick(mDatas.get(position));
+                    mItemClickListener.onClick(position, mDatas.get(position));
                 }
                 if(mItemPositionListener != null) {
                     mItemPositionListener.onPosition(position);

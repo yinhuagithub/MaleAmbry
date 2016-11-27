@@ -2,13 +2,19 @@ package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.MatchAdapter;
 import com.graduation.yinhua.maleambry.contract.MatchContract;
+import com.graduation.yinhua.maleambry.listeners.IStyleChangeListener;
 import com.graduation.yinhua.maleambry.model.ItemType.MatchItemType;
 import com.graduation.yinhua.maleambry.model.Match;
+import com.graduation.yinhua.maleambry.model.Single;
+import com.graduation.yinhua.maleambry.model.StatusCode;
+import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
+import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.presenter.MatchPresenter;
 import com.graduation.yinhua.maleambry.view.base.BaseMVPFragment;
 
@@ -16,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * MatchFragment.java
@@ -24,7 +33,8 @@ import butterknife.BindView;
  * Created by yinhua on 2016/11/9.
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
-public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPresenter> implements MatchContract.View {
+public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPresenter> implements MatchContract.View,IStyleChangeListener {
+    private static final int DEFAULT_STYLE = 1;
 
     @BindView(R.id.toolbar_title)
     TextView mTvTitle;
@@ -32,6 +42,10 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
     @BindView(R.id.rv_match)
     RecyclerView mRvMatch;
 
+    private int mStyle = DEFAULT_STYLE;
+    private int mPage;
+    private boolean mLoadingMore = true;
+    private boolean mRefreshing = false;
     MatchAdapter mAdapter;
 
     @Override
@@ -45,37 +59,7 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
 
         mTvTitle.setText(R.string.match);
 
-        List list = new ArrayList();
-
-        Match item1 = new Match();
-        item1.setThumb_url("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item1.setThumb1("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item1.setThumb2("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item1.setThumb3("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item1.setTitle("英伦简约搭");
-        item1.setDescription("毛衣+牛仔裤+马丁靴");
-        list.add(item1);
-
-        Match item2 = new Match();
-        item2.setThumb_url("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item2.setThumb1("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item2.setThumb2("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item2.setThumb3("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item2.setTitle("日韩街头男孩穿搭");
-        item2.setDescription("风衣+休闲裤+高帮鞋");
-        list.add(item2);
-
-        Match item3 = new Match();
-        item3.setThumb_url("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item3.setThumb1("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item3.setThumb2("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item3.setThumb3("http://nanyiku-v200.oss-cn-shenzhen.aliyuncs.com/product/16110218074201800122.jpg");
-        item3.setTitle("卡其工装外套穿搭");
-        item3.setDescription("工装外套+牛仔裤+帆布鞋");
-        list.add(item3);
-
-        mAdapter = new MatchAdapter();
-        mAdapter.addItems(list,true);
+        mAdapter = new MatchAdapter(MatchFragment.this);
 
         final GridLayoutManager manager = new GridLayoutManager(getContext(), 1);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -96,5 +80,43 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
+        if(isVisible) {
+            if(mLoadingMore) {
+                fetchMatchByNet(1, mPage, true);
+            }
+        }
+    }
+
+    private void fetchMatchByNet(int style, int page, final boolean loadNewData) {
+        MaleAmbryRetrofit.getInstance().getMatch(style, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<List<Match>>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(ResponseMessage<List<Match>> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                            if(loadNewData) {
+                                mAdapter.addItems(responseMessage.getResults(), false);
+                            } else {
+                                mAdapter.addItems(responseMessage.getResults(), true);
+                            }
+                            mLoadingMore = false;
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void changeStyle(int style) {
+        mStyle = style + 1;
+        mPage = 0;
+        fetchMatchByNet(mStyle, mPage, true);
     }
 }

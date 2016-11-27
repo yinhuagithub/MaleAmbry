@@ -47,6 +47,14 @@ public interface MaleAmbryApi {
     @GET("recommand_single")
     Observable<ResponseMessage<List<Single>>> getRecommandSingle();
 
+    //获取某风格第n页搭配信息
+    @GET("single")
+    Observable<ResponseMessage<List<Single>>> getSingle(@Query("style") int style, @Query("page") int page);
+
+    //获取某风格第n页搭配信息
+    @GET("match")
+    Observable<ResponseMessage<List<Match>>> getMatch(@Query("style") int style, @Query("page") int page);
+
     //获取第n页发现信息
     @GET("discovery")
     Observable<ResponseMessage<List<Discovery>>> getDiscovery(@Query("page") int page);
