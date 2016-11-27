@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.listeners.IStyleChangeListener;
-import com.graduation.yinhua.maleambry.model.ItemType.MatchItemType;
 import com.graduation.yinhua.maleambry.model.ItemType.SingleItemType;
 import com.graduation.yinhua.maleambry.model.MatchStyle;
 import com.graduation.yinhua.maleambry.model.Single;

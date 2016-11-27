@@ -4,6 +4,7 @@ import com.graduation.yinhua.maleambry.model.Banner;
 import com.graduation.yinhua.maleambry.model.Discovery;
 import com.graduation.yinhua.maleambry.model.Match;
 import com.graduation.yinhua.maleambry.model.Single;
+import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.net.response.TestResponse;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -58,4 +60,9 @@ public interface MaleAmbryApi {
     //获取第n页发现信息
     @GET("discovery")
     Observable<ResponseMessage<List<Discovery>>> getDiscovery(@Query("page") int page);
+
+    //注册用户
+    @POST("register")
+    Observable<ResponseMessage<User>> register(@Query("login_name") String login_name, @Query("password") String password, @Query("phone") String phone);
+
 }

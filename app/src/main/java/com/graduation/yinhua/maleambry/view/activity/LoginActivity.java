@@ -1,5 +1,6 @@
 package com.graduation.yinhua.maleambry.view.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,4 +45,8 @@ public class LoginActivity extends BaseActivity {
         LoginActivity.this.finish();
     }
 
+    @OnClick(R.id.tv_register)
+    public void register() {
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
 }

@@ -77,7 +77,9 @@
     <string name="user_info_finish">完成</string>
     <string name="user_name">用户名</string>
     <string name="user_phone">手机号</string>
-    
+    <string name="sms_code">验证码</string>
+    <string name="get_sms_code">获取验证码</string>
+
     <string name="user_feedback">用户反馈</string>
     <string name="contract_info">联系方式</string>
     <string name="hint_contract_info">QQ/Email/电话</string>
@@ -96,6 +98,10 @@
     <string name="hint_input_old_password">请输入旧密码</string>
     <string name="hint_input_new_password">请输入新密码</string>
     <string name="hint_reinput_new_password">请再次输入新密码</string>
+
+    <string name="hint_please_input_11_phone">请输入11位手机号</string>
+    <string name="hint_please_input_password">请输入密码</string>
+    <string name="hint_please_input_sms_code">请输入验证码</string>
 
     <string name="about">关于</string>
 </resources>
