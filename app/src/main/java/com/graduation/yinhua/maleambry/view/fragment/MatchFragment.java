@@ -46,7 +46,7 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
     private int mPage;
     private boolean mLoadingMore = true;
     private boolean mRefreshing = false;
-    MatchAdapter mAdapter;
+    MatchAdapter mMatchAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -59,17 +59,17 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
 
         mTvTitle.setText(R.string.match);
 
-        mAdapter = new MatchAdapter(MatchFragment.this);
+        mMatchAdapter = new MatchAdapter(MatchFragment.this);
 
         final GridLayoutManager manager = new GridLayoutManager(getContext(), 1);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return mAdapter.getItemViewType(position) == MatchItemType.CONTENT.ordinal() ? 1:manager.getSpanCount();
+                return mMatchAdapter.getItemViewType(position) == MatchItemType.CONTENT.ordinal() ? 1:manager.getSpanCount();
             }
         });
         mRvMatch.setLayoutManager(manager);
-        mRvMatch.setAdapter(mAdapter);
+        mRvMatch.setAdapter(mMatchAdapter);
 
     }
 
@@ -103,9 +103,9 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
                     public void onNext(ResponseMessage<List<Match>> responseMessage) {
                         if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                             if(loadNewData) {
-                                mAdapter.addItems(responseMessage.getResults(), false);
+                                mMatchAdapter.addItems(responseMessage.getResults(), false);
                             } else {
-                                mAdapter.addItems(responseMessage.getResults(), true);
+                                mMatchAdapter.addItems(responseMessage.getResults(), true);
                             }
                             mLoadingMore = false;
                         }

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.listeners.IStyleChangeListener;
 import com.graduation.yinhua.maleambry.model.ItemType.MatchItemType;
 import com.graduation.yinhua.maleambry.model.ItemType.SingleItemType;
 import com.graduation.yinhua.maleambry.model.MatchStyle;
@@ -43,11 +44,16 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
     private Context mContext;
     private MatchStyleAdapter mMatchStyleAdapter;
     private TextView tv_title;
+    private IStyleChangeListener styleChangeListener;
 
-
-    public SingleStyleAdapter(int page) {
+    public SingleStyleAdapter(int page, SingleStyleFragment context) {
         this.mPage = page;
         DEFAULT_TITLE = TITLE[page];
+        if(context instanceof IStyleChangeListener) {
+            styleChangeListener = context;
+        } else {
+            throw new RuntimeException(context.getClass().getSimpleName() + " should implement IStyleChangeListener.");
+        }
     }
 
     @Override
@@ -127,6 +133,7 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
                 public void onSelected(int position, String name) {
                     SingleStyleAdapter.this.mTitle = name;
                     setTitle(name);
+                    styleChangeListener.changeStyle(position);
                 }
             });
         }
