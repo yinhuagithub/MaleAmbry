@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.listeners.IStyleChangeListener;
+import com.graduation.yinhua.maleambry.listeners.OnItemClickListener;
 import com.graduation.yinhua.maleambry.model.ItemType.MatchItemType;
 import com.graduation.yinhua.maleambry.model.Match;
 import com.graduation.yinhua.maleambry.model.MatchStyle;
 import com.graduation.yinhua.maleambry.utils.MatchStyleUtil;
+import com.graduation.yinhua.maleambry.view.activity.GalleryActivity;
 import com.graduation.yinhua.maleambry.view.fragment.MatchFragment;
 import com.graduation.yinhua.maleambry.view.widgets.RatioImageView;
 import com.squareup.picasso.Picasso;
@@ -121,6 +124,13 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
                 }
             });
         }
+
+        setOnItemClickListener(new OnItemClickListener<Match>() {
+            @Override
+            public void onClick(int position, Match item) {
+                mContext.startActivity(new Intent(mContext, GalleryActivity.class));
+            }
+        });
     }
 
     /**

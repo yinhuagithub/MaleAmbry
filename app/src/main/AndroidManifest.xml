@@ -59,6 +59,8 @@
         <!--关于男衣橱页面-->
         <activity android:name=".view.activity.AboutActivity"></activity>
 
+        <!--图片展示画廊-->
+        <activity android:name=".view.activity.GalleryActivity"></activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
