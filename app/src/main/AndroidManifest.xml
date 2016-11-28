@@ -47,6 +47,9 @@
         <!--我的设置界面-->
         <activity android:name=".view.activity.SettingActivity"></activity>
 
+        <!--我的收藏-->
+        <activity android:name=".view.activity.FavoriteActivity"></activity>
+
         <!--修改密码页面-->
         <activity android:name=".view.activity.ModifyPasswordActivity"></activity>
 

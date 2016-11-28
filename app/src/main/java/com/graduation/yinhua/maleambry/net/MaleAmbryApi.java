@@ -85,4 +85,15 @@ public interface MaleAmbryApi {
     @POST("feedback")
     Observable<ResponseMessage<String>> feedback(@Query("contact") String contact, @Query("content") String content);
 
+    //单品收藏
+    @POST("favo_single")
+    Observable<ResponseMessage<List<Single>>> getFavoriteSingle(@Query("app_token") String app_token, @Query("page") int page);
+
+    //搭配收藏
+    @POST("favo_match")
+    Observable<ResponseMessage<List<Match>>> getFavoriteMatch(@Query("app_token") String app_token, @Query("page") int page);
+
+    //发现收藏
+    @POST("favo_discovery")
+    Observable<ResponseMessage<List<Discovery>>> getFavoriteDiscovery(@Query("app_token") String app_token, @Query("page") int page);
 }

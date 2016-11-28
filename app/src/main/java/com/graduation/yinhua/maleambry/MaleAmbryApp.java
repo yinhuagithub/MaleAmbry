@@ -44,7 +44,9 @@ public class MaleAmbryApp extends Application {
         mConfigSP = new SPUtil(mContext, SP_CONFIG_NAME);
 
         User user = getUserInfo();
-        loginAccount(user.getApp_token(), user.getLogin_name(), user.getPassword());
+        if(user != null) {
+            loginAccount(user.getApp_token(), user.getLogin_name(), user.getPassword());
+        }
     }
 
     public static SPUtil getConfigSP() {

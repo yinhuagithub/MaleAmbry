@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.model.User;
+import com.graduation.yinhua.maleambry.view.activity.FavoriteActivity;
 import com.graduation.yinhua.maleambry.view.activity.FeedBackActivity;
 import com.graduation.yinhua.maleambry.view.activity.LoginActivity;
 import com.graduation.yinhua.maleambry.view.activity.SettingActivity;
@@ -64,7 +66,12 @@ public class MineFragment extends BaseFragment {
 
     @OnClick(R.id.rl_mine_favorite)
     public void enterMyFavorites() {
-
+        User user = MaleAmbryApp.getUser();
+        if(user != null && user.isLogin()) {
+            startActivity(new Intent(getContext(), FavoriteActivity.class));
+        } else {
+            Toast.makeText(getContext(), "请登录后再查看我的收藏", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.rl_mine_feedback)
