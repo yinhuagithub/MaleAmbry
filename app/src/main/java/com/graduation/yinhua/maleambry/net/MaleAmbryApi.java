@@ -71,6 +71,18 @@ public interface MaleAmbryApi {
 
     //找回密码
     @GET("forgot_password")
-    Observable<ResponseMessage<User>> forgotPassword(@Query("phone") String pone, @Query("new_psd") String new_psd);
+    Observable<ResponseMessage<User>> forgotPassword(@Query("phone") String phone, @Query("new_psd") String new_psd);
+
+    //修改密码
+    @POST("modify_password")
+    Observable<ResponseMessage<User>> modifyPassword(@Query("app_token") String app_token, @Query("old_psd") String old_psd, @Query("new_psd") String new_psd, @Query("phone") String phone);
+
+    //修改用户信息
+    @POST("modify_user_info")
+    Observable<ResponseMessage<User>> modifyUserInfo(@Query("app_token") String app_token, @Query("nick_name") String nick_name, @Query("phone") String phone);
+
+    //反馈意见
+    @POST("feedback")
+    Observable<ResponseMessage<String>> feedback(@Query("contact") String contact, @Query("content") String content);
 
 }

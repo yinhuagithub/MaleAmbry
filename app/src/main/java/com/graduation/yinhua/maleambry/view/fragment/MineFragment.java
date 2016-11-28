@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.view.activity.FeedBackActivity;
 import com.graduation.yinhua.maleambry.view.activity.LoginActivity;
 import com.graduation.yinhua.maleambry.view.activity.SettingActivity;
@@ -25,6 +27,9 @@ import butterknife.OnClick;
  */
 public class MineFragment extends BaseFragment {
 
+    @BindView(R.id.tv_user_nick)
+    TextView mTvUserNick;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_mine;
@@ -36,15 +41,30 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick(R.id.iv_mine_avatar)
-    public void clickUserAvatar() {
-        loginAccount();
+    @Override
+    public void onResume() {
+        super.onResume();
+        User user = MaleAmbryApp.getUser();
+        if(user != null && user.isLogin()) {
+            mTvUserNick.setText(user.getNick_name());
+        } else {
+            mTvUserNick.setText(R.string.visitor);
+        }
     }
 
-    @OnClick(R.id.tv_user_nick)
-    public void clickUserNick() {
-//        loginAccount();
-        viewUserInfo();
+    @OnClick(R.id.ll_user)
+    public void clickUserAvatar() {
+        User user = MaleAmbryApp.getUser();
+        if(user != null && user.isLogin()) {
+            viewUserInfo();
+        } else {
+            loginAccount();
+        }
+    }
+
+    @OnClick(R.id.rl_mine_favorite)
+    public void enterMyFavorites() {
+
     }
 
     @OnClick(R.id.rl_mine_feedback)

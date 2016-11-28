@@ -6,8 +6,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 
 import butterknife.BindView;
@@ -50,6 +53,13 @@ public class SettingActivity extends BaseActivity {
     protected void initWidgets() {
         super.initWidgets();
         mToolbarTitle.setText(R.string.setting);
+
+        User user = MaleAmbryApp.getUser();
+        if(user != null && user.isLogin()) {
+            mBtnQuit.setText(R.string.quit_current_account);
+        } else {
+            mBtnQuit.setText(R.string.login);
+        }
     }
 
     @Override
@@ -66,7 +76,13 @@ public class SettingActivity extends BaseActivity {
         mTvModifyPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SettingActivity.this, ModifyPasswordActivity.class));
+                User user = MaleAmbryApp.getUser();
+                if(user != null && user.isLogin()) {
+                    startActivity(new Intent(SettingActivity.this, ModifyPasswordActivity.class));
+                } else {
+                    Toast.makeText(SettingActivity.this, "请登录后再修改密码", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -80,6 +96,12 @@ public class SettingActivity extends BaseActivity {
         mBtnQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                User user = MaleAmbryApp.getUser();
+                if(user == null || !user.isLogin()) {
+                    startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+                } else {
+                    MaleAmbryApp.clearUserInfo();
+                }
                 SettingActivity.this.finish();
             }
         });

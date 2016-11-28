@@ -12,6 +12,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
 
+    private boolean isLogin;
+
     @SerializedName("uid")
     @Expose
     private int uid;
@@ -39,6 +41,14 @@ public class User {
     @SerializedName("phone")
     @Expose
     private String phone;
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
+    }
 
     public int getUid() {
         return uid;
