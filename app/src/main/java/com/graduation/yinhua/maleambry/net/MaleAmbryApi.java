@@ -61,8 +61,16 @@ public interface MaleAmbryApi {
     @GET("discovery")
     Observable<ResponseMessage<List<Discovery>>> getDiscovery(@Query("page") int page);
 
-    //注册用户
+    //用户注册
     @POST("register")
     Observable<ResponseMessage<User>> register(@Query("login_name") String login_name, @Query("password") String password, @Query("phone") String phone);
+
+    //用户登录
+    @POST("login")
+    Observable<ResponseMessage<User>> login(@Query("app_token") String app_token, @Query("login_name") String login_name, @Query("password") String password);
+
+    //找回密码
+    @GET("forgot_password")
+    Observable<ResponseMessage<User>> forgotPassword(@Query("phone") String pone, @Query("new_psd") String new_psd);
 
 }

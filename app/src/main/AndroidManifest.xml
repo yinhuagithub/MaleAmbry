@@ -50,6 +50,9 @@
         <!--修改密码页面-->
         <activity android:name=".view.activity.ModifyPasswordActivity"></activity>
 
+        <!--忘记密码-->
+        <activity android:name=".view.activity.ForgotPasswordActivity"></activity>
+
         <!--关于男衣橱页面-->
         <activity android:name=".view.activity.AboutActivity"></activity>
 

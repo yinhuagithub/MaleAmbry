@@ -72,6 +72,7 @@
     <string name="hint_input_password">输入密码</string>
     <string name="user_protocol">用户协议</string>
     <string name="forget_password">忘记密码？</string>
+    <string name="found_password">找回密码</string>
 
     <string name="user_info">用户信息</string>
     <string name="user_info_finish">完成</string>
