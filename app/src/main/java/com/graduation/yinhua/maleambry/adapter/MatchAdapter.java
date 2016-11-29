@@ -109,7 +109,7 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
     }
 
     @Override
-    protected void bindListener(RecyclerView.ViewHolder holder, int position) {
+    protected void bindListener(RecyclerView.ViewHolder holder,final int position) {
         super.bindListener(holder, position);
 
         int itemViewType = getItemViewType(position);
@@ -128,7 +128,12 @@ public class MatchAdapter extends BaseRecyclerAdapter<Match, RecyclerView.ViewHo
         setOnItemClickListener(new OnItemClickListener<Match>() {
             @Override
             public void onClick(int position, Match item) {
-                mContext.startActivity(new Intent(mContext, GalleryActivity.class));
+                Match match = getItem(position - 1);
+                Intent intent = new Intent(mContext, GalleryActivity.class);
+                intent.putExtra("type", "match");
+                intent.putExtra("title", match.getTitle());
+                intent.putExtra("mid", match.getMid());
+                mContext.startActivity(intent);
             }
         });
     }

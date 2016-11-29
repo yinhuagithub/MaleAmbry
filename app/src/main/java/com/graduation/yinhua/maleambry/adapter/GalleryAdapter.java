@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.model.Gallery;
+import com.graduation.yinhua.maleambry.view.activity.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,10 +24,10 @@ import java.util.List;
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
 public class GalleryAdapter extends PagerAdapter {
-    private List<String> list;
+    private List<Gallery> list;
     private Context context;
 
-    public GalleryAdapter(Context context, List<String> list) {
+    public GalleryAdapter(Context context, List<Gallery> list) {
         this.context = context;
         this.list = list;
     }
@@ -47,10 +50,13 @@ public class GalleryAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "hahaha" + position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "hahaha---->" + list.get(position).getThumb_url(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("thumb_url", list.get(position).getThumb_url());
+                context.startActivity(intent);
             }
         });
-        Picasso.with(context).load(list.get(position)).into(imageView);
+        Picasso.with(context).load(list.get(position).getThumbnail()).into(imageView);
         container.addView(view);
         return view;
     }

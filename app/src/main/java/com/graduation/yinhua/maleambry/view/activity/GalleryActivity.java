@@ -1,5 +1,6 @@
 package com.graduation.yinhua.maleambry.view.activity;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,6 +8,11 @@ import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.GalleryAdapter;
+import com.graduation.yinhua.maleambry.model.Gallery;
+import com.graduation.yinhua.maleambry.model.StatusCode;
+import com.graduation.yinhua.maleambry.model.ThumbMatch;
+import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
+import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 import com.graduation.yinhua.maleambry.view.widgets.ScaleTransformer;
 
@@ -14,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * GalleryActivity.java
@@ -30,6 +39,9 @@ public class GalleryActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView mIvBack;
 
+    @BindView(R.id.viewpager)
+    ViewPager mVpGallery;
+
     @Override
     protected boolean getImmersiveStatus() {
         return false;
@@ -43,19 +55,17 @@ public class GalleryActivity extends BaseActivity {
     @Override
     protected void initWidgets() {
         super.initWidgets();
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setPageMargin(30);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.setPageTransformer(false, new ScaleTransformer());
-        List<String> list = new ArrayList<>();
-        list.add("https://gd4.alicdn.com/imgextra/i1/2562423560/TB2oi7rap15V1Bjy1XbXXaNcVXa_!!2562423560.jpg");
-        list.add("https://gd4.alicdn.com/imgextra/i4/55139032/TB2ZPkKhFXXXXa8XpXXXXXXXXXX_!!55139032.jpg");
-        list.add("https://img.alicdn.com/bao/uploaded/i1/TB1OHxQHXXXXXXBXXXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
-        list.add("https://img.alicdn.com/imgextra/i1/1693687552/TB2DPYkaNvzQeBjSZPfXXbWGFXa_!!1693687552.jpg_430x430q90.jpg");
-        list.add("https://gd4.alicdn.com/imgextra/i1/92867844/TB2XMSjangc61BjSZFzXXXH2FXa_!!92867844.jpg");
-        list.add("https://img.alicdn.com/bao/uploaded/i1/TB115dBOXXXXXXlXFXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg");
-        GalleryAdapter adater = new GalleryAdapter(this, list);
-        viewPager.setAdapter(adater);
+        mVpGallery = (ViewPager) findViewById(R.id.viewpager);
+        mVpGallery.setPageMargin(30);
+        mVpGallery.setOffscreenPageLimit(3);
+        mVpGallery.setPageTransformer(false, new ScaleTransformer());
+
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
+        mToolbarTitle.setText(intent.getStringExtra("title"));
+        if(type.equals("match")) {
+            fetchThumbMatchByNet(intent.getIntExtra("mid", 0));
+        }
     }
 
     @Override
@@ -67,5 +77,48 @@ public class GalleryActivity extends BaseActivity {
                 GalleryActivity.this.finish();
             }
         });
+    }
+
+    /**
+     * 获取搭配图片集
+     * @param mid
+     */
+    private void fetchThumbMatchByNet(int mid) {
+        MaleAmbryRetrofit.getInstance().getThumbMatch(mid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<List<ThumbMatch>>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onNext(ResponseMessage<List<ThumbMatch>> responseMessage) {
+                        if(responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                            handleThumbMatchData(responseMessage.getResults());
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 处理match数据图集
+     * @param results
+     */
+    private void handleThumbMatchData(List<ThumbMatch> results) {
+        if(results != null && results.size() > 0) {
+            List<Gallery> galleries = new ArrayList<Gallery>();
+            for (int index = 0; index < results.size(); index++) {
+                Gallery gallery = new Gallery();
+                ThumbMatch thumbMatch = results.get(index);
+                gallery.setThumbnail(thumbMatch.getThumbnail());
+                gallery.setThumb_url(thumbMatch.getThumb_url());
+                galleries.add(gallery);
+            }
+            GalleryAdapter adater = new GalleryAdapter(this, galleries);
+            mVpGallery.setAdapter(adater);
+        }
     }
 }

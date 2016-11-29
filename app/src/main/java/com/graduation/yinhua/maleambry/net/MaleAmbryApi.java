@@ -4,6 +4,7 @@ import com.graduation.yinhua.maleambry.model.Banner;
 import com.graduation.yinhua.maleambry.model.Discovery;
 import com.graduation.yinhua.maleambry.model.Match;
 import com.graduation.yinhua.maleambry.model.Single;
+import com.graduation.yinhua.maleambry.model.ThumbMatch;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.net.response.TestResponse;
@@ -96,4 +97,8 @@ public interface MaleAmbryApi {
     //发现收藏
     @POST("favo_discovery")
     Observable<ResponseMessage<List<Discovery>>> getFavoriteDiscovery(@Query("app_token") String app_token, @Query("page") int page);
+
+    //搭配图片集
+    @GET("thumb_match")
+    Observable<ResponseMessage<List<ThumbMatch>>> getThumbMatch(@Query("mid") int mid);
 }
