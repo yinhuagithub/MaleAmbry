@@ -2,6 +2,13 @@ package com.graduation.yinhua.maleambry.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.graduation.yinhua.maleambry.MaleAmbryApp;
+import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
+import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * User.java
@@ -104,5 +111,36 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * 登录账号
+     * @param app_token
+     * @param loginName
+     * @param password
+     */
+    public static void loginAccount(String app_token, String loginName, String password) {
+        MaleAmbryRetrofit.getInstance().login(app_token, loginName, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<User>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onNext(ResponseMessage<User> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                            User user = responseMessage.getResults();
+                            MaleAmbryApp.setUser(user);
+                            FavoSingle.fetchFavoSingle(user.getApp_token());
+                            FavoMatch.fetchFavoMatch(user.getApp_token());
+                            FavoDiscovery.fetchFavoDiscovery(user.getApp_token());
+                        }
+                    }
+                });
     }
 }

@@ -2,6 +2,9 @@ package com.graduation.yinhua.maleambry.net;
 
 import com.graduation.yinhua.maleambry.model.Banner;
 import com.graduation.yinhua.maleambry.model.Discovery;
+import com.graduation.yinhua.maleambry.model.FavoDiscovery;
+import com.graduation.yinhua.maleambry.model.FavoMatch;
+import com.graduation.yinhua.maleambry.model.FavoSingle;
 import com.graduation.yinhua.maleambry.model.Match;
 import com.graduation.yinhua.maleambry.model.Single;
 import com.graduation.yinhua.maleambry.model.ThumbMatch;
@@ -37,6 +40,18 @@ public interface MaleAmbryApi {
     //获取banner信息
     @GET("banner")
     Observable<ResponseMessage<List<Banner>>> getBanner();
+
+    //获取单品收藏列表id
+    @GET("favo_sid")
+    Observable<ResponseMessage<List<FavoSingle>>> getFavoSid(@Query("app_token") String app_token);
+
+    //获取搭配收藏列表id
+    @GET("favo_mid")
+    Observable<ResponseMessage<List<FavoMatch>>> getFavoMid(@Query("app_token") String app_token);
+
+    //获取发现收藏列表id
+    @GET("favo_did")
+    Observable<ResponseMessage<List<FavoDiscovery>>> getFavoDid(@Query("app_token") String app_token);
 
     //获取吸睛发现信息
     @GET("recommand_discovery")
@@ -101,4 +116,5 @@ public interface MaleAmbryApi {
     //搭配图片集
     @GET("thumb_match")
     Observable<ResponseMessage<List<ThumbMatch>>> getThumbMatch(@Query("mid") int mid);
+
 }

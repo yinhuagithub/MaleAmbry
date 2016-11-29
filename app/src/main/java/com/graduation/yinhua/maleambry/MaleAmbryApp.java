@@ -4,11 +4,16 @@ import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.graduation.yinhua.maleambry.model.FavoDiscovery;
+import com.graduation.yinhua.maleambry.model.FavoMatch;
+import com.graduation.yinhua.maleambry.model.FavoSingle;
 import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.utils.SPUtil;
+
+import java.util.List;
 
 import cn.smssdk.SMSSDK;
 import rx.Observer;
@@ -34,6 +39,9 @@ public class MaleAmbryApp extends Application {
     private static Context mContext;
 
     private static User mUser = null;
+    private static List<FavoSingle> mFavoSingleList = null;
+    private static List<FavoMatch> mFavoMatchList = null;
+    private static List<FavoDiscovery> mFavoDiscoveryList = null;
 
     @Override
     public void onCreate() {
@@ -45,7 +53,7 @@ public class MaleAmbryApp extends Application {
 
         User user = getUserInfo();
         if(user != null) {
-            loginAccount(user.getApp_token(), user.getLogin_name(), user.getPassword());
+            User.loginAccount(user.getApp_token(), user.getLogin_name(), user.getPassword());
         }
     }
 
@@ -65,6 +73,30 @@ public class MaleAmbryApp extends Application {
         mUser =user;
         mUser.setLogin(true);
         saveUser();
+    }
+
+    public static List<FavoSingle> getmFavoSingleList() {
+        return mFavoSingleList;
+    }
+
+    public static void setmFavoSingleList(List<FavoSingle> mFavoSingleList) {
+        MaleAmbryApp.mFavoSingleList = mFavoSingleList;
+    }
+
+    public static List<FavoMatch> getmFavoMatchList() {
+        return mFavoMatchList;
+    }
+
+    public static void setmFavoMatchList(List<FavoMatch> mFavoMatchList) {
+        MaleAmbryApp.mFavoMatchList = mFavoMatchList;
+    }
+
+    public static List<FavoDiscovery> getmFavoDiscoveryList() {
+        return mFavoDiscoveryList;
+    }
+
+    public static void setmFavoDiscoveryList(List<FavoDiscovery> mFavoDiscoveryList) {
+        MaleAmbryApp.mFavoDiscoveryList = mFavoDiscoveryList;
     }
 
     /**
@@ -116,30 +148,4 @@ public class MaleAmbryApp extends Application {
         return  user;
     }
 
-    /**
-     * 登录账号
-     * @param app_token
-     * @param loginName
-     * @param password
-     */
-    private void loginAccount(String app_token, String loginName, String password) {
-        MaleAmbryRetrofit.getInstance().login(app_token, loginName, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseMessage<User>>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {}
-
-                    @Override
-                    public void onNext(ResponseMessage<User> responseMessage) {
-                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
-                            MaleAmbryApp.setUser(responseMessage.getResults());
-                        }
-                    }
-                });
-    }
 }
