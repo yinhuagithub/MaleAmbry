@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ import com.graduation.yinhua.maleambry.model.Single;
 import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.view.activity.DetailActivity;
+import com.graduation.yinhua.maleambry.view.activity.GalleryActivity;
 import com.graduation.yinhua.maleambry.view.widgets.RatioImageView;
 import com.squareup.picasso.Picasso;
 
@@ -115,6 +119,16 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
         }
     }
 
+    @Override
+    protected void bindListener(RecyclerView.ViewHolder holder, int position) {
+        super.bindListener(holder, position);
+
+//        int itemViewType = getItemViewType(position);
+//        if (itemViewType == HomeItemType.SINGLE.ordinal()) {
+//            bindDataToSingleView((HomeSingleViewHolder)holder, position);
+//        }
+    }
+
     /**
      * 绑定数据到Banner视图
      * @param item
@@ -134,14 +148,23 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
      * 绑定数据到HomeDiscoveryWithTitle视图
      * @param holder
      */
-    public void bindDataToDiscoveryWithTitleView(final HomeDiscoveryWithTitleViewHolder holder) {
+    private void bindDataToDiscoveryWithTitleView(final HomeDiscoveryWithTitleViewHolder holder) {
         holder.tv_title.setText(R.string.home_discovery_title);
         fetchDiscoveryByNet(0, new IObtainDataListener<Discovery>() {
             @Override
-            public void obtainData(Discovery discovery) {
+            public void obtainData(final Discovery discovery) {
                 holder.tv_discovery_title.setText(discovery.getTitle());
                 Picasso.with(mContext).load(discovery.getThumb()).into(holder.riv_discovery_thumb);
                 holder.tv_discovery_viewed.setText("" + discovery.getViewed());
+                holder.item_title_discovery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, DetailActivity.class);
+                        intent.putExtra("title", discovery.getTitle());
+                        intent.putExtra("thumb_url", discovery.getDetail_url());
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         });
     }
@@ -153,10 +176,19 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
     private void bindDataToDiscoveryView(final HomeDiscoveryViewHolder holder) {
         fetchDiscoveryByNet(1, new IObtainDataListener<Discovery>() {
             @Override
-            public void obtainData(Discovery discovery) {
+            public void obtainData(final Discovery discovery) {
                 holder.tv_discovery_title.setText(discovery.getTitle());
                 Picasso.with(mContext).load(discovery.getThumb()).into(holder.riv_discovery_thumb);
                 holder.tv_discovery_viewed.setText("" + discovery.getViewed());
+                holder.rl_discovery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, DetailActivity.class);
+                        intent.putExtra("title", discovery.getTitle());
+                        intent.putExtra("thumb_url", discovery.getDetail_url());
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         });
     }
@@ -165,16 +197,26 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
      * 绑定数据到MatchWithTitle视图
      * @param holder
      */
-    public void bindDataToMatchWithTitleView(final HomeMatchWithTitleViewHolder holder) {
+    private void bindDataToMatchWithTitleView(final HomeMatchWithTitleViewHolder holder) {
         holder.tv_match_title.setText(R.string.home_match_title);
         fetchMatchByNet(0, new IObtainDataListener<Match>() {
             @Override
-            public void obtainData(Match match) {
+            public void obtainData(final Match match) {
                 holder.tv_match_title.setText(match.getTitle());
                 Picasso.with(mContext).load(match.getThumb_url()).into(holder.riv_match_item1);
                 Picasso.with(mContext).load(match.getThumb1()).into(holder.riv_match_item2);
                 Picasso.with(mContext).load(match.getThumb2()).into(holder.riv_match_item3);
                 holder.tv_match_description.setText(match.getDescription());
+                holder.item_title_match.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, GalleryActivity.class);
+                        intent.putExtra("type", "match");
+                        intent.putExtra("title", match.getTitle());
+                        intent.putExtra("mid", match.getMid());
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         });
     }
@@ -185,12 +227,22 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
     private void bindDataToMatchView(final HomeMatchViewHolder holder) {
         fetchMatchByNet(1, new IObtainDataListener<Match>() {
             @Override
-            public void obtainData(Match match) {
+            public void obtainData(final Match match) {
                 holder.tv_match_title.setText(match.getTitle());
                 Picasso.with(mContext).load(match.getThumb_url()).into(holder.riv_match_item1);
                 Picasso.with(mContext).load(match.getThumb1()).into(holder.riv_match_item2);
                 Picasso.with(mContext).load(match.getThumb2()).into(holder.riv_match_item3);
                 holder.tv_match_description.setText(match.getDescription());
+                holder.rl_match.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, GalleryActivity.class);
+                        intent.putExtra("type", "match");
+                        intent.putExtra("title", match.getTitle());
+                        intent.putExtra("mid", match.getMid());
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         });
     }
@@ -336,7 +388,10 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
         }
     }
 
-    public class HomeDiscoveryWithTitleViewHolder extends HomeDiscoveryViewHolder {
+    public class HomeDiscoveryWithTitleViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.item_title_discovery)
+        RelativeLayout item_title_discovery;
 
         @BindView(R.id.tv_title)
         TextView tv_title;
@@ -358,6 +413,9 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
 
     public class HomeDiscoveryViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.rl_discovery)
+        RelativeLayout rl_discovery;
+
         @BindView(R.id.tv_discovery_title)
         TextView tv_discovery_title;
 
@@ -373,7 +431,10 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
         }
     }
 
-    public class HomeMatchWithTitleViewHolder extends HomeMatchViewHolder {
+    public class HomeMatchWithTitleViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.item_title_match)
+        RelativeLayout item_title_match;
 
         @BindView(R.id.tv_title)
         TextView tv_title;
@@ -400,6 +461,9 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
     }
 
     public class HomeMatchViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.rl_match)
+        RelativeLayout rl_match;
 
         @BindView(R.id.tv_match_title)
         TextView tv_match_title;

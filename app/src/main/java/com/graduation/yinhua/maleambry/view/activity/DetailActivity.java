@@ -1,8 +1,10 @@
 package com.graduation.yinhua.maleambry.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,17 +57,21 @@ public class DetailActivity extends BaseActivity {
     protected void initWidgets() {
         super.initWidgets();
 
+        Intent intent = getIntent();
+        String title = intent.getStringExtra("title");
+        String thumb_url = intent.getStringExtra("thumb_url");
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWebView = new WebView(getApplicationContext());
         mWebView.setLayoutParams(params);
         mLlGallery.addView(mWebView);
 
+        initWebView(title, thumb_url);
 //        mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 //        mLlGallery.setLayerType(View.LAYER_TYPE_HARDWARE, null);
     }
 
     @SuppressLint("NewApi")
-    private void initWebView() {
+    private void initWebView(final String toolbar_title, String thumb_url) {
 
         mWebSettings = mWebView.getSettings();
         if (Build.VERSION.SDK_INT >= 19) {
@@ -87,16 +93,27 @@ public class DetailActivity extends BaseActivity {
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
-                mToolbarTitle.setText(title);
+                if (TextUtils.isEmpty(toolbar_title)) {
+                    mToolbarTitle.setText(title);
+                } else {
+                    mToolbarTitle.setText(toolbar_title);
+                }
             }
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
             }
         });
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         mWebSettings.setJavaScriptEnabled(true);
+        mWebSettings.setSupportZoom(true);
+        mWebSettings.setBuiltInZoomControls(true);
+        mWebSettings.setUseWideViewPort(true);
+        mWebSettings.setLoadWithOverviewMode(true);
+        mWebSettings.setAppCacheEnabled(true);
         mWebSettings.setDomStorageEnabled(true);
-        mWebView.loadUrl(getIntent().getStringExtra("thumb_url"));
+        mWebSettings.setUserAgentString("User-Agent:Android");
+        mWebView.loadUrl(thumb_url);
     }
 
     @Override

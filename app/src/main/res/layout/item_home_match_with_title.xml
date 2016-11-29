@@ -6,6 +6,7 @@
     <include layout="@layout/item_match_title" />
 
     <include layout="@layout/item_match_content"
+        android:id="@+id/item_title_match"
         android:layout_width="match_parent"
         android:layout_margin="5dp"
         android:layout_height="wrap_content"

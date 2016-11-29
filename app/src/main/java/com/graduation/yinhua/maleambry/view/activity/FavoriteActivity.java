@@ -50,6 +50,7 @@ public class FavoriteActivity extends BaseActivity {
         mTvTitle.setText(R.string.favorite);
 
         FavoriteFragmentPagerAdapter mAdapter = new FavoriteFragmentPagerAdapter(getSupportFragmentManager(), FavoriteActivity.this);
+        mVpFavorite.setOffscreenPageLimit(3);
         mVpFavorite.setAdapter(mAdapter);
         mTlFavorite.setupWithViewPager(mVpFavorite);
     }

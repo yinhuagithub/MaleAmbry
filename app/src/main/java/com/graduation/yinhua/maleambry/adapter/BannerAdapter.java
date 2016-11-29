@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.model.Banner;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
+import com.graduation.yinhua.maleambry.view.activity.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -104,7 +106,7 @@ public class BannerAdapter extends PagerAdapter {
         }
         final String url = MaleAmbryRetrofit.BASE_IMAGE_URL + mBannerList.get(realIndex).getThumbnail();
 
-        ImageView imageView = initImageView(url);
+        ImageView imageView = initImageView(url, mBannerList.get(realIndex).getTarget_url());
 
         container.addView(imageView);
         return imageView;
@@ -123,7 +125,7 @@ public class BannerAdapter extends PagerAdapter {
      * @param url
      * @return
      */
-    private ImageView initImageView(String url) {
+    private ImageView initImageView(String url, final String target_url) {
         final ImageView imageView;
         if (mImageCacheList.isEmpty()) {
             imageView = createImageView();
@@ -136,7 +138,7 @@ public class BannerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enterDetailActivity();
+                enterDetailActivity(target_url);
             }
         });
 
@@ -146,8 +148,10 @@ public class BannerAdapter extends PagerAdapter {
     /**
      * 进入详细Activity
      */
-    private void enterDetailActivity() {
-
+    private void enterDetailActivity(String target_url) {
+        Intent intent = new Intent(mContext, DetailActivity.class);
+        intent.putExtra("thumb_url", target_url);
+        mContext.startActivity(intent);
     }
 
     /**

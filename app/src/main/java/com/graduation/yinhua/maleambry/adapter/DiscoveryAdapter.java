@@ -1,13 +1,17 @@
 package com.graduation.yinhua.maleambry.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.listeners.OnItemClickListener;
 import com.graduation.yinhua.maleambry.model.Discovery;
+import com.graduation.yinhua.maleambry.view.activity.DetailActivity;
+import com.graduation.yinhua.maleambry.view.activity.GalleryActivity;
 import com.graduation.yinhua.maleambry.view.widgets.RatioImageView;
 import com.squareup.picasso.Picasso;
 
@@ -40,8 +44,21 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery, DiscoveryAd
 
         holder.tv_discovery_title.setText(item.getTitle());
         Picasso.with(mContext).load(item.getThumb()).into(holder.riv_discovery_thumb);
-//        holder.riv_discovery_thumb.setImageResource(position == 0 ? R.drawable.discovery1 : R.drawable.discovery2);
         holder.tv_discovery_viewed.setText("" + item.getViewed());
+    }
+
+    @Override
+    protected void bindListener(DiscoveryViewHolder holder, int position) {
+        super.bindListener(holder, position);
+        setOnItemClickListener(new OnItemClickListener<Discovery>() {
+            @Override
+            public void onClick(int position, Discovery item) {
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("title", item.getTitle());
+                intent.putExtra("thumb_url", item.getDetail_url());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     public class DiscoveryViewHolder extends RecyclerView.ViewHolder {
