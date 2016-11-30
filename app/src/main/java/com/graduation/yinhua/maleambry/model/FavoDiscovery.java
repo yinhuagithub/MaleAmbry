@@ -57,6 +57,24 @@ public class FavoDiscovery {
         this.uid = uid;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FavoDiscovery that = (FavoDiscovery) o;
+
+        return did == that.did;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fdid;
+        result = 31 * result + did;
+        result = 31 * result + uid;
+        return result;
+    }
+
     public static void fetchFavoDiscovery(String app_token) {
         MaleAmbryRetrofit.getInstance().getFavoDid(app_token)
                 .subscribeOn(Schedulers.io())

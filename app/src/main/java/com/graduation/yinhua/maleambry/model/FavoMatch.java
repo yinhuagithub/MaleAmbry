@@ -57,6 +57,24 @@ public class FavoMatch {
         this.uid = uid;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FavoMatch favoMatch = (FavoMatch) o;
+
+        return mid == favoMatch.mid;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fmid;
+        result = 31 * result + mid;
+        result = 31 * result + uid;
+        return result;
+    }
+
     public static void fetchFavoMatch(String app_token) {
         MaleAmbryRetrofit.getInstance().getFavoMid(app_token)
                 .subscribeOn(Schedulers.io())

@@ -42,6 +42,7 @@ public class SingleFragment extends BaseMVPFragment<SingleContract.View, SingleP
         mTvTitle.setText(R.string.single);
 
         SingleFragmentPagerAdapter mAdapter = new SingleFragmentPagerAdapter(getChildFragmentManager(), getContext());
+        mVpSingle.setOffscreenPageLimit(4);
         mVpSingle.setAdapter(mAdapter);
         mTlSingle.setupWithViewPager(mVpSingle);
     }

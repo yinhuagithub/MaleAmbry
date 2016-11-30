@@ -57,6 +57,24 @@ public class FavoSingle {
         this.uid = uid;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FavoSingle that = (FavoSingle) o;
+
+        return sid == that.sid;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fsid;
+        result = 31 * result + sid;
+        result = 31 * result + uid;
+        return result;
+    }
+
     public static void fetchFavoSingle(String app_token) {
         MaleAmbryRetrofit.getInstance().getFavoSid(app_token)
                 .subscribeOn(Schedulers.io())

@@ -2,23 +2,16 @@ package com.graduation.yinhua.maleambry;
 
 import android.app.Application;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.graduation.yinhua.maleambry.model.FavoDiscovery;
 import com.graduation.yinhua.maleambry.model.FavoMatch;
 import com.graduation.yinhua.maleambry.model.FavoSingle;
-import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
-import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
-import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.utils.SPUtil;
 
 import java.util.List;
 
 import cn.smssdk.SMSSDK;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * MaleAmbryApp.java
@@ -100,6 +93,39 @@ public class MaleAmbryApp extends Application {
     }
 
     /**
+     * 判断是否包含单品
+     * @param sid
+     * @return
+     */
+    public static boolean containsSingle(int sid) {
+        FavoSingle favoSingle = new FavoSingle();
+        favoSingle.setSid(sid);
+        return MaleAmbryApp.getmFavoSingleList().contains(favoSingle);
+    }
+
+    /**
+     * 判断是否包含搭配
+     * @param mid
+     * @return
+     */
+    public static boolean containsMatch(int mid) {
+        FavoMatch favoMatch = new FavoMatch();
+        favoMatch.setMid(mid);
+        return MaleAmbryApp.getmFavoMatchList().contains(favoMatch);
+    }
+
+    /**
+     * 判断是否包含发现
+     * @param did
+     * @return
+     */
+    public static boolean containsDiscovery(int did) {
+        FavoDiscovery favoDiscovery = new FavoDiscovery();
+        favoDiscovery.setDid(did);
+        return MaleAmbryApp.getmFavoDiscoveryList().contains(favoDiscovery);
+    }
+
+    /**
      * 保存用户信息到SharedPreferences中
      */
     private static void saveUser() {
@@ -144,6 +170,10 @@ public class MaleAmbryApp extends Application {
             user.setPassword(mConfigSP.getString("password", ""));
             user.setTimestamp(mConfigSP.getLong("timestamp", 0));
             user.setPhone(mConfigSP.getString("phone", ""));
+
+            if(System.currentTimeMillis() - user.getTimestamp() > 30 * 24 * 60 * 60 * 100) {    //app_token过期
+                user = null;
+            }
         }
         return  user;
     }
