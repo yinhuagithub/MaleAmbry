@@ -75,6 +75,10 @@ public class FavoDiscovery {
         return result;
     }
 
+    /**
+     * 获取发现收藏列表
+     * @param app_token
+     */
     public static void fetchFavoDiscovery(String app_token) {
         MaleAmbryRetrofit.getInstance().getFavoDid(app_token)
                 .subscribeOn(Schedulers.io())
@@ -94,6 +98,54 @@ public class FavoDiscovery {
                     public void onNext(ResponseMessage<List<FavoDiscovery>> responseMessage) {
                         if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                             MaleAmbryApp.setmFavoDiscoveryList(responseMessage.getResults());
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 添加到发现收藏列表
+     * @param app_token
+     * @param did
+     */
+    public static void addFavoDid(String app_token, int did) {
+        MaleAmbryRetrofit.getInstance().addFavoDid(app_token, did)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<String>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onNext(ResponseMessage<String> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 从发现收藏列表移除
+     * @param app_token
+     * @param did
+     */
+    public static void removeFavoDid(String app_token, int did) {
+        MaleAmbryRetrofit.getInstance().removeFavoDid(app_token, did)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<String>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onNext(ResponseMessage<String> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                         }
                     }
                 });

@@ -60,7 +60,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_toStartOf="@+id/tv_single_fav_count"
-            android:src="@mipmap/icon_mine_fav" />
+            android:src="@drawable/selector_favo_heart" />
 
         <TextView
             android:id="@+id/tv_single_price"

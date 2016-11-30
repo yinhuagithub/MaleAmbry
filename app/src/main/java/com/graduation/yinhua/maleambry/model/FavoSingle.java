@@ -75,6 +75,10 @@ public class FavoSingle {
         return result;
     }
 
+    /**
+     * 获取单品收藏列表
+     * @param app_token
+     */
     public static void fetchFavoSingle(String app_token) {
         MaleAmbryRetrofit.getInstance().getFavoSid(app_token)
                 .subscribeOn(Schedulers.io())
@@ -90,6 +94,54 @@ public class FavoSingle {
                     public void onNext(ResponseMessage<List<FavoSingle>> responseMessage) {
                         if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                             MaleAmbryApp.setmFavoSingleList(responseMessage.getResults());
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 添加到单品收藏列表
+     * @param app_token
+     * @param sid
+     */
+    public static void addFavoSid(String app_token, int sid) {
+        MaleAmbryRetrofit.getInstance().addFavoSid(app_token, sid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<String>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onNext(ResponseMessage<String> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 从单品收藏列表移除
+     * @param app_token
+     * @param sid
+     */
+    public static void removeFavoSid(String app_token, int sid) {
+        MaleAmbryRetrofit.getInstance().removeFavoSid(app_token, sid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<String>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onNext(ResponseMessage<String> responseMessage) {
+                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                         }
                     }
                 });

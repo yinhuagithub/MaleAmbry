@@ -98,9 +98,13 @@ public class MaleAmbryApp extends Application {
      * @return
      */
     public static boolean containsSingle(int sid) {
-        FavoSingle favoSingle = new FavoSingle();
-        favoSingle.setSid(sid);
-        return MaleAmbryApp.getmFavoSingleList().contains(favoSingle);
+        if(MaleAmbryApp.getmFavoSingleList() != null) {
+            FavoSingle favoSingle = new FavoSingle();
+            favoSingle.setSid(sid);
+            return MaleAmbryApp.getmFavoSingleList().contains(favoSingle);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -109,9 +113,13 @@ public class MaleAmbryApp extends Application {
      * @return
      */
     public static boolean containsMatch(int mid) {
-        FavoMatch favoMatch = new FavoMatch();
-        favoMatch.setMid(mid);
-        return MaleAmbryApp.getmFavoMatchList().contains(favoMatch);
+        if(MaleAmbryApp.getmFavoMatchList() != null){
+            FavoMatch favoMatch = new FavoMatch();
+            favoMatch.setMid(mid);
+            return MaleAmbryApp.getmFavoMatchList().contains(favoMatch);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -120,9 +128,13 @@ public class MaleAmbryApp extends Application {
      * @return
      */
     public static boolean containsDiscovery(int did) {
-        FavoDiscovery favoDiscovery = new FavoDiscovery();
-        favoDiscovery.setDid(did);
-        return MaleAmbryApp.getmFavoDiscoveryList().contains(favoDiscovery);
+        if(MaleAmbryApp.getmFavoDiscoveryList() != null) {
+            FavoDiscovery favoDiscovery = new FavoDiscovery();
+            favoDiscovery.setDid(did);
+            return MaleAmbryApp.getmFavoDiscoveryList().contains(favoDiscovery);
+        } else {
+            return false;
+        }
     }
 
     /**

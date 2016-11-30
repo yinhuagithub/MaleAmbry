@@ -17,12 +17,15 @@ import android.widget.Toast;
 import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.listeners.IObtainDataListener;
+import com.graduation.yinhua.maleambry.listeners.OnItemClickListener;
 import com.graduation.yinhua.maleambry.model.Banner;
 import com.graduation.yinhua.maleambry.model.Discovery;
+import com.graduation.yinhua.maleambry.model.FavoSingle;
 import com.graduation.yinhua.maleambry.model.ItemType.HomeItemType;
 import com.graduation.yinhua.maleambry.model.Match;
 import com.graduation.yinhua.maleambry.model.Single;
 import com.graduation.yinhua.maleambry.model.StatusCode;
+import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.view.activity.DetailActivity;
@@ -123,10 +126,33 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
     protected void bindListener(RecyclerView.ViewHolder holder, int position) {
         super.bindListener(holder, position);
 
-//        int itemViewType = getItemViewType(position);
-//        if (itemViewType == HomeItemType.SINGLE.ordinal()) {
-//            bindDataToSingleView((HomeSingleViewHolder)holder, position);
-//        }
+        int itemViewType = getItemViewType(position);
+        if (itemViewType == HomeItemType.SINGLE.ordinal()) {
+            HomeSingleViewHolder singleHolder = (HomeSingleViewHolder) holder;
+            final Single single = getItem(position - TYPE_COUNT + 1);
+
+            singleHolder.iv_single_fav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    User user = MaleAmbryApp.getUser();
+                    if(MaleAmbryApp.containsSingle(single.getSid())) {
+                        FavoSingle.removeFavoSid(user.getApp_token(), single.getSid());
+                    } else {
+                        if(user != null && user.isLogin()) {
+                            FavoSingle.addFavoSid(user.getApp_token(), single.getSid());
+                        } else {
+                            Toast.makeText(mContext, "请先登录后，再来收藏", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+            setOnItemClickListener(new OnItemClickListener<Single>() {
+                @Override
+                public void onClick(int position, Single item) {
+
+                }
+            });
+        }
     }
 
     /**
@@ -265,6 +291,11 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
         holder.tv_single_name.setText(single.getTitle());
         holder.tv_single_price.setText("" + single.getPrice());
         holder.tv_single_fav_count.setText("" + single.getFavorite_count());
+        if(MaleAmbryApp.containsSingle(single.getSid())) {
+            holder.iv_single_fav.setSelected(true);
+        } else {
+            holder.iv_single_fav.setSelected(false);
+        }
     }
 
     /**

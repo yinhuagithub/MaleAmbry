@@ -45,13 +45,37 @@ public interface MaleAmbryApi {
     @GET("favo_sid")
     Observable<ResponseMessage<List<FavoSingle>>> getFavoSid(@Query("app_token") String app_token);
 
+    //添加到单品收藏列表
+    @GET("add_favo_sid")
+    Observable<ResponseMessage<String>> addFavoSid(@Query("app_token") String app_token, @Query("sid") int sid);
+
+    //从单品收藏列表移除
+    @GET("remove_favo_sid")
+    Observable<ResponseMessage<String>> removeFavoSid(@Query("app_token") String app_token, @Query("sid") int sid);
+
     //获取搭配收藏列表id
     @GET("favo_mid")
     Observable<ResponseMessage<List<FavoMatch>>> getFavoMid(@Query("app_token") String app_token);
 
+    //添加到搭配收藏列表
+    @GET("add_favo_mid")
+    Observable<ResponseMessage<String>> addFavoMid(@Query("app_token") String app_token, @Query("mid") int mid);
+
+    //从搭配收藏列表移除
+    @GET("remove_favo_mid")
+    Observable<ResponseMessage<String>> removeFavoMid(@Query("app_token") String app_token, @Query("mid") int mid);
+
     //获取发现收藏列表id
     @GET("favo_did")
     Observable<ResponseMessage<List<FavoDiscovery>>> getFavoDid(@Query("app_token") String app_token);
+
+    //添加到发现收藏列表
+    @GET("add_favo_did")
+    Observable<ResponseMessage<String>> addFavoDid(@Query("app_token") String app_token, @Query("did") int did);
+
+    //从发现收藏列表移除
+    @GET("remove_favo_did")
+    Observable<ResponseMessage<String>> removeFavoDid(@Query("app_token") String app_token, @Query("did") int did);
 
     //获取吸睛发现信息
     @GET("recommand_discovery")
