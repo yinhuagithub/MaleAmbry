@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -34,8 +35,10 @@ public class SingleFavoriteFragment extends BaseLazyLoaderFragment {
     @BindView(R.id.rv_favorite_single)
     RecyclerView mRvFavoriteSingle;
 
-    private boolean mLoadingMore = true;
-    private boolean mRefreshing = false;
+    @BindView(R.id.srl_favorite_single)
+    SwipeRefreshLayout mSrlFavoriteSingle;
+
+    private boolean mRefreshing = true;
     private SingleFavoriteAdapter mSingleAdapter;
 
     public static SingleFavoriteFragment newInstance() {
@@ -59,9 +62,24 @@ public class SingleFavoriteFragment extends BaseLazyLoaderFragment {
     }
 
     @Override
+    protected void initEvents() {
+        super.initEvents();
+        mSrlFavoriteSingle.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(!mRefreshing) {
+                    mRefreshing = true;
+                    loadSingleFavoriteByNet();
+                }
+            }
+        });
+        mSrlFavoriteSingle.setColorSchemeResources(R.color.colorAccent);
+    }
+
+    @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         if(isVisible) {
-            if(mLoadingMore) {
+            if(mRefreshing) {
                 loadSingleFavoriteByNet();
             }
         }
@@ -87,7 +105,10 @@ public class SingleFavoriteFragment extends BaseLazyLoaderFragment {
                     public void onNext(ResponseMessage<List<Single>> responseMessage) {
                         if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                             mSingleAdapter.addItems(responseMessage.getResults(), false);
-                            mLoadingMore = false;
+                            mRefreshing = false;
+                            if(mSrlFavoriteSingle.isRefreshing()) {
+                                mSrlFavoriteSingle.setRefreshing(false);
+                            }
                         }
                     }
                 });

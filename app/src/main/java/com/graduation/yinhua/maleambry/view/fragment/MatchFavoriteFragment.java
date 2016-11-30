@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,11 +34,13 @@ import rx.schedulers.Schedulers;
  */
 public class MatchFavoriteFragment extends BaseLazyLoaderFragment {
 
+    @BindView(R.id.srl_favorite_match)
+    SwipeRefreshLayout mSrlFavoriteMatch;
+
     @BindView(R.id.rv_favorite_match)
     RecyclerView mRvFavoriteMatch;
 
-    private boolean mLoadingMore = true;
-    private boolean mRefreshing = false;
+    private boolean mRefreshing = true;
     private MatchFavoriteAdapter mMatchAdapter;
 
     public static MatchFavoriteFragment newInstance() {
@@ -61,9 +64,24 @@ public class MatchFavoriteFragment extends BaseLazyLoaderFragment {
     }
 
     @Override
+    protected void initEvents() {
+        super.initEvents();
+        mSrlFavoriteMatch.setColorSchemeResources(R.color.colorAccent);
+        mSrlFavoriteMatch.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(!mRefreshing) {
+                    mRefreshing = true;
+                    loadSingleFavoriteByNet();
+                }
+            }
+        });
+    }
+
+    @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         if(isVisible) {
-            if(mLoadingMore) {
+            if(mRefreshing) {
                 loadSingleFavoriteByNet();
             }
         }
@@ -89,7 +107,10 @@ public class MatchFavoriteFragment extends BaseLazyLoaderFragment {
                     public void onNext(ResponseMessage<List<Match>> responseMessage) {
                         if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                             mMatchAdapter.addItems(responseMessage.getResults(), false);
-                            mLoadingMore = false;
+                            mRefreshing = false;
+                            if(mSrlFavoriteMatch.isRefreshing()) {
+                                mSrlFavoriteMatch.setRefreshing(false);
+                            }
                         }
                     }
                 });

@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,11 +34,13 @@ import rx.schedulers.Schedulers;
  */
 public class DiscoveryFavoriteFragment extends BaseLazyLoaderFragment {
 
+    @BindView(R.id.srl_favorite_discovery)
+    SwipeRefreshLayout mSrlFavoriteDiscovery;
+
     @BindView(R.id.rv_favorite_discovery)
     RecyclerView mRvFavoriteDiscovery;
 
-    private boolean mLoadingMore = true;
-    private boolean mRefreshing = false;
+    private boolean mRefreshing = true;
     private DiscoveryFavoriteAdapter mDiscoveryAdapter;
 
     public static DiscoveryFavoriteFragment newInstance() {
@@ -61,9 +64,24 @@ public class DiscoveryFavoriteFragment extends BaseLazyLoaderFragment {
     }
 
     @Override
+    protected void initEvents() {
+        super.initEvents();
+        mSrlFavoriteDiscovery.setColorSchemeResources(R.color.colorAccent);
+        mSrlFavoriteDiscovery.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(!mRefreshing) {
+                    mRefreshing = true;
+                    loadDiscoveryFavoriteByNet();
+                }
+            }
+        });
+    }
+
+    @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         if(isVisible) {
-            if(mLoadingMore) {
+            if(mRefreshing) {
                 loadDiscoveryFavoriteByNet();
             }
         }
@@ -89,7 +107,10 @@ public class DiscoveryFavoriteFragment extends BaseLazyLoaderFragment {
                     public void onNext(ResponseMessage<List<Discovery>> responseMessage) {
                         if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                             mDiscoveryAdapter.addItems(responseMessage.getResults(), false);
-                            mLoadingMore = false;
+                            mRefreshing = false;
+                            if(mSrlFavoriteDiscovery.isRefreshing()) {
+                                mSrlFavoriteDiscovery.setRefreshing(false);
+                            }
                         }
                     }
                 });
