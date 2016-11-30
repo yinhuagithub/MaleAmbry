@@ -104,5 +104,8 @@
     <string name="hint_please_input_password">请输入密码</string>
     <string name="hint_please_input_sms_code">请输入验证码</string>
 
+    <string name="loading">加载中…</string>
+    <string name="no_more_data">亲，没有更多数据了</string>
+
     <string name="about">关于</string>
 </resources>

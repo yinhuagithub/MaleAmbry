@@ -15,4 +15,5 @@
     <color name="mine_item_text_color">#3E3E3E</color>
     <color name="red_price">#FF0000</color>
     <color name="stroke_line">#bdbdbd</color>
+    <color name="grey">#8C8C8C</color>
 </resources>
