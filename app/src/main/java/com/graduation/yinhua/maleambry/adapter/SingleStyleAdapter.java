@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,13 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.listeners.IStyleChangeListener;
+import com.graduation.yinhua.maleambry.listeners.OnItemClickListener;
+import com.graduation.yinhua.maleambry.model.FavoSingle;
 import com.graduation.yinhua.maleambry.model.ItemType.SingleItemType;
+import com.graduation.yinhua.maleambry.model.Match;
 import com.graduation.yinhua.maleambry.model.MatchStyle;
 import com.graduation.yinhua.maleambry.model.Single;
+import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.utils.MatchStyleUtil;
+import com.graduation.yinhua.maleambry.view.activity.GalleryActivity;
 import com.graduation.yinhua.maleambry.view.fragment.SingleStyleFragment;
 import com.graduation.yinhua.maleambry.view.widgets.RatioImageView;
 import com.squareup.picasso.Picasso;
@@ -106,6 +114,11 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
             singleStyleHolder.tv_single_name.setText(item.getTitle());
             singleStyleHolder.tv_single_fav_count.setText("" + item.getFavorite_count());
             singleStyleHolder.tv_single_price.setText("" + item.getPrice());
+            if(MaleAmbryApp.containsSingle(item.getSid())) {
+                singleStyleHolder.iv_single_fav.setSelected(true);
+            } else {
+                singleStyleHolder.iv_single_fav.setSelected(false);
+            }
         }
     }
 
@@ -133,6 +146,34 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
                     SingleStyleAdapter.this.mTitle = name;
                     setTitle(name);
                     styleChangeListener.changeStyle(position);
+                }
+            });
+            SingleStyleViewHolder singleStyleHolder = (SingleStyleViewHolder) holder;
+            final Single item = getItem(position - TYPE_COUNT + 1);
+
+            singleStyleHolder.iv_single_fav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    User user = MaleAmbryApp.getUser();
+                    if(MaleAmbryApp.containsSingle(item.getSid())) {
+                        FavoSingle.removeFavoSid(user.getApp_token(), item.getSid());
+                    } else {
+                        if(user != null && user.isLogin()) {
+                            FavoSingle.addFavoSid(user.getApp_token(), item.getSid());
+                        } else {
+                            Toast.makeText(mContext, "请先登录后，再来收藏", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+            setOnItemPositionListener(new OnItemPositionListener() {
+                @Override
+                public void onPosition(int position) {
+                    Intent intent = new Intent(mContext, GalleryActivity.class);
+                    intent.putExtra("type", "single");
+                    intent.putExtra("title", item.getTitle());
+                    intent.putExtra("sid", item.getSid());
+                    mContext.startActivity(intent);
                 }
             });
         }

@@ -146,10 +146,14 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
                     }
                 }
             });
-            setOnItemClickListener(new OnItemClickListener<Single>() {
+            setOnItemPositionListener(new OnItemPositionListener() {
                 @Override
-                public void onClick(int position, Single item) {
-
+                public void onPosition(int position) {
+                    Intent intent = new Intent(mContext, GalleryActivity.class);
+                    intent.putExtra("type", "single");
+                    intent.putExtra("title", single.getTitle());
+                    intent.putExtra("sid", single.getSid());
+                    mContext.startActivity(intent);
                 }
             });
         }

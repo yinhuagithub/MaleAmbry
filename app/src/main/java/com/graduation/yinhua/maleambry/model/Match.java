@@ -108,4 +108,20 @@ public class Match {
     public void setThumb3(String thumb3) {
         this.thumb3 = thumb3;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Match match = (Match) o;
+
+        return mid == match.mid;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return mid;
+    }
 }

@@ -8,6 +8,7 @@ import com.graduation.yinhua.maleambry.model.FavoSingle;
 import com.graduation.yinhua.maleambry.model.Match;
 import com.graduation.yinhua.maleambry.model.Single;
 import com.graduation.yinhua.maleambry.model.ThumbMatch;
+import com.graduation.yinhua.maleambry.model.ThumbSingle;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.net.response.TestResponse;
@@ -140,5 +141,9 @@ public interface MaleAmbryApi {
     //搭配图片集
     @GET("thumb_match")
     Observable<ResponseMessage<List<ThumbMatch>>> getThumbMatch(@Query("mid") int mid);
+
+    //单品图片集
+    @GET("thumb_single")
+    Observable<ResponseMessage<List<ThumbSingle>>> getThumbSingle(@Query("sid") int sid);
 
 }

@@ -95,4 +95,18 @@ public class Single {
     public void setTarget_url(String target_url) {
         this.target_url = target_url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Single single = (Single) o;
+        return sid == single.sid;
+    }
+
+    @Override
+    public int hashCode() {
+        return sid;
+    }
 }

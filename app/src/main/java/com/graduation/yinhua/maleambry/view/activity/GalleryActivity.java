@@ -11,6 +11,7 @@ import com.graduation.yinhua.maleambry.adapter.GalleryAdapter;
 import com.graduation.yinhua.maleambry.model.Gallery;
 import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.ThumbMatch;
+import com.graduation.yinhua.maleambry.model.ThumbSingle;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
@@ -65,6 +66,8 @@ public class GalleryActivity extends BaseActivity {
         mToolbarTitle.setText(intent.getStringExtra("title"));
         if(type.equals("match")) {
             fetchThumbMatchByNet(intent.getIntExtra("mid", 0));
+        } else if (type.equals("single")) {
+            fetchThumbSingleByNet(intent.getIntExtra("sid", 0));
         }
     }
 
@@ -115,6 +118,49 @@ public class GalleryActivity extends BaseActivity {
                 ThumbMatch thumbMatch = results.get(index);
                 gallery.setThumbnail(thumbMatch.getThumbnail());
                 gallery.setThumb_url(thumbMatch.getThumb_url());
+                galleries.add(gallery);
+            }
+            GalleryAdapter adater = new GalleryAdapter(this, galleries);
+            mVpGallery.setAdapter(adater);
+        }
+    }
+
+    /**
+     * 获取单品图片集
+     * @param sid
+     */
+    private void fetchThumbSingleByNet(int sid) {
+        MaleAmbryRetrofit.getInstance().getThumbSingle(sid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseMessage<List<ThumbSingle>>>() {
+                    @Override
+                    public void onCompleted() {}
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onNext(ResponseMessage<List<ThumbSingle>> responseMessage) {
+                        if(responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
+                            handleThumbSingleData(responseMessage.getResults());
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 处理match数据图集
+     * @param results
+     */
+    private void handleThumbSingleData(List<ThumbSingle> results) {
+        if(results != null && results.size() > 0) {
+            List<Gallery> galleries = new ArrayList<Gallery>();
+            for (int index = 0; index < results.size(); index++) {
+                Gallery gallery = new Gallery();
+                ThumbSingle thumbSingle = results.get(index);
+                gallery.setThumbnail(thumbSingle.getThumbnail());
+                gallery.setThumb_url("http://www.baidu.com");
                 galleries.add(gallery);
             }
             GalleryAdapter adater = new GalleryAdapter(this, galleries);

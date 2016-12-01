@@ -71,4 +71,20 @@ public class Discovery {
     public void setDetail_url(String detail_url) {
         this.detail_url = detail_url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Discovery discovery = (Discovery) o;
+
+        return did == discovery.did;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return did;
+    }
 }
