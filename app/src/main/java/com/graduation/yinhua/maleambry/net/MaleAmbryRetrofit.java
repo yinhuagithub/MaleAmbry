@@ -19,7 +19,7 @@ public class MaleAmbryRetrofit {
 
 //    private static final String BASE_URL = "http://10.0.2.2:8080/MaleAmbry/";
 //    private static final String BASE_URL = "http://192.168.1.100:8080/MaleAmbry/";
-    private static final String BASE_URL = "http://192.169.60.178:8080/MaleAmbry/";
+    private static final String BASE_URL = "http://192.169.60.129:8080/MaleAmbry/";
     public static final String BASE_IMAGE_URL = BASE_URL + "images/";
     private final MaleAmbryApi mMaleAmbryApi;
 

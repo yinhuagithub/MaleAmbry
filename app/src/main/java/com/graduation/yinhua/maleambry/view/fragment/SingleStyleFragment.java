@@ -2,9 +2,11 @@ package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.SingleStyleAdapter;
@@ -38,15 +40,18 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment implements IStyl
     private static final String ARGS_SINGLE_STYLE_PAGE = "single style page";
     private static final int DEFAULT_STYLE = 101;
 
+    @BindView(R.id.srl_single_style)
+    SwipeRefreshLayout mSrlSingleStyle;
+
     @BindView(R.id.rl_single_style)
-    RecyclerView mRlSingleStyle;
+    RecyclerView mRvSingleStyle;
 
     private int mStyle = DEFAULT_STYLE;
     private int mPage;
-    private boolean mLoadingMore = true;
-    private boolean mRefreshing = false;
+    private boolean mLoadingMore = false;
     private int mSingleStylePage;
-    SingleStyleAdapter mSingleStyleAdapter;
+    private SingleStyleAdapter mSingleStyleAdapter;
+    private GridLayoutManager mLayoutManager;
 
     public static SingleStyleFragment newInstance(int singleStylePage) {
         Bundle bundle = new Bundle();
@@ -62,6 +67,7 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment implements IStyl
         Bundle bundle = getArguments();
         if(bundle != null) {
             mSingleStylePage = bundle.getInt(ARGS_SINGLE_STYLE_PAGE);
+            mStyle = (mSingleStylePage + 1) * 100 + 1;
         }
     }
 
@@ -75,27 +81,53 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment implements IStyl
         super.initWidgets();
 
         mSingleStyleAdapter = new SingleStyleAdapter(mSingleStylePage, SingleStyleFragment.this);
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        mLayoutManager = new GridLayoutManager(getContext(), 2);
+        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return mSingleStyleAdapter.getItemViewType(position) == SingleItemType.CONTENT.ordinal() ? 1 : gridLayoutManager.getSpanCount();
+                return mSingleStyleAdapter.getItemViewType(position) == SingleItemType.CONTENT.ordinal() ? 1 : mLayoutManager.getSpanCount();
             }
         });
-        mRlSingleStyle.setLayoutManager(gridLayoutManager);
-        mRlSingleStyle.setAdapter(mSingleStyleAdapter);
+        mRvSingleStyle.setLayoutManager(mLayoutManager);
+        mRvSingleStyle.setAdapter(mSingleStyleAdapter);
+    }
+
+    @Override
+    protected void initEvents() {
+        super.initEvents();
+        mSrlSingleStyle.setColorSchemeResources(R.color.colorAccent);
+        mSrlSingleStyle.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPage = 0;
+                fetchSingleByNet();
+            }
+        });
+
+        mRvSingleStyle.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
+                if(lastVisibleItemPosition + 1 == mSingleStyleAdapter.getItemCount()) {
+                    if(!mLoadingMore) {
+                        mLoadingMore = true;
+                        fetchSingleByNet();
+                    }
+                }
+            }
+        });
     }
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         if(isVisible) {
-            if(mLoadingMore) {
-                fetchSingleByNet(true);
+            if(mPage == 0 && !mLoadingMore) {
+                fetchSingleByNet();
             }
         }
     }
 
-    private void fetchSingleByNet(final boolean loadNewData) {
+    private void fetchSingleByNet() {
         MaleAmbryRetrofit.getInstance().getSingle(mStyle, mPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -110,12 +142,12 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment implements IStyl
                     @Override
                     public void onNext(ResponseMessage<List<Single>> responseMessage) {
                         if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
-                            if(loadNewData) {
-                                mSingleStyleAdapter.addItems(responseMessage.getResults(), false);
-                            } else {
-                                mSingleStyleAdapter.addItems(responseMessage.getResults(), true);
+                            List<Single> results = responseMessage.getResults();
+                            if(results != null && results.size() > 0) {
+                                fetchServiceDataSuccess(results);
                             }
-                            mLoadingMore = false;
+                        } else {
+                            Toast.makeText(getContext(), R.string.no_more_data, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -125,6 +157,19 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment implements IStyl
     public void changeStyle(int style) {
         mStyle = (mSingleStylePage + 1) * 100 + (style + 1);
         mPage = 0;
-        fetchSingleByNet(true);
+        fetchSingleByNet();
+    }
+
+    private void fetchServiceDataSuccess(List<Single> results) {
+        if(mPage == 0) {
+            mSingleStyleAdapter.addItems(results, false);
+        } else {
+            mSingleStyleAdapter.addItems(results, true);
+        }
+        mPage++;
+        mLoadingMore = false;
+        if(mSrlSingleStyle.isRefreshing()) {
+            mSrlSingleStyle.setRefreshing(false);
+        }
     }
 }

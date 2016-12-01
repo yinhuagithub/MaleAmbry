@@ -33,10 +33,11 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery, RecyclerVie
     private static final int TYPE_COUNT = DiscoveryItemType.values().length;
 
     private Context mContext;
+    private TextView mFootView;
     private int mFootHint = R.string.loading;
 
     public void setFootHint(int res) {
-        this.mFootHint = res;
+        mFootView.setText(res);
     }
 
     @Override
@@ -78,6 +79,7 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery, RecyclerVie
         } else {
             FootViewHolder footHolder = (FootViewHolder) holder;
             footHolder.tv_foot.setText(mFootHint);
+            mFootView = footHolder.tv_foot;
         }
     }
 

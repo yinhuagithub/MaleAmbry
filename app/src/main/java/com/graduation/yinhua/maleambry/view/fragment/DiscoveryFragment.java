@@ -1,8 +1,10 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.graduation.yinhua.maleambry.R;
@@ -31,6 +33,8 @@ import rx.schedulers.Schedulers;
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
 public class DiscoveryFragment extends BaseMVPFragment<DiscoveryContract.View, DiscoveryPresenter> implements DiscoveryContract.View {
+
+    private static final String TAG = DiscoveryFragment.class.getSimpleName();
 
     @BindView(R.id.toolbar_title)
     TextView mTvTitle;
@@ -69,7 +73,8 @@ public class DiscoveryFragment extends BaseMVPFragment<DiscoveryContract.View, D
         mSrlDiscovery.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fetchDiscovery(0);
+                mPage = 0;
+                fetchDiscovery(mPage);
             }
         });
 
@@ -130,9 +135,9 @@ public class DiscoveryFragment extends BaseMVPFragment<DiscoveryContract.View, D
                             List<Discovery> results = responseMessage.getResults();
                             if(results != null && results.size() > 0) {
                                 fetchServiceDataSuccess(page, results);
-                            } else {
-                                mAdapter.setFootHint(R.string.no_more_data);
                             }
+                        } else {
+                            mAdapter.setFootHint(R.string.no_more_data);
                         }
                     }
                 });
