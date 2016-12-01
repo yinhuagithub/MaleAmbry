@@ -301,7 +301,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
     /**
      * 获取banner数据
      */
-    private void fetchBannerByNet(final ViewPager viewPager) {
+    private synchronized void fetchBannerByNet(final ViewPager viewPager) {
         MaleAmbryRetrofit.getInstance().getBanner()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -335,7 +335,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
     /**
      * 获取discovery数据
      */
-    private void fetchDiscoveryByNet(int page, final IObtainDataListener<Discovery> listener) {
+    private synchronized void fetchDiscoveryByNet(int page, final IObtainDataListener<Discovery> listener) {
         MaleAmbryRetrofit.getInstance().getRecommandDiscovery(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

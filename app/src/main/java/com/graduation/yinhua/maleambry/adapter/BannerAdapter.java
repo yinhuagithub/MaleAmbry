@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,7 +134,9 @@ public class BannerAdapter extends PagerAdapter {
             imageView = mImageCacheList.pop();
         }
 
-        Picasso.with(mContext).load(url).placeholder(R.drawable.default_place_holder_banner).into(imageView);
+        if(!TextUtils.isEmpty(url)) {
+            Picasso.with(mContext).load(url).placeholder(R.drawable.default_place_holder_banner).into(imageView);
+        }
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
