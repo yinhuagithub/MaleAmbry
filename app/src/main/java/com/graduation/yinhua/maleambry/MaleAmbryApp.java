@@ -46,7 +46,7 @@ public class MaleAmbryApp extends Application {
 
         User user = getUserInfo();
         if(user != null) {
-            User.loginAccount(user.getApp_token(), user.getLogin_name(), user.getPassword());
+            User.loginAccount(user.getApp_token(), user.getLogin_name(), user.getPassword(), null);
         }
     }
 
@@ -134,6 +134,42 @@ public class MaleAmbryApp extends Application {
             return MaleAmbryApp.getmFavoDiscoveryList().contains(favoDiscovery);
         } else {
             return false;
+        }
+    }
+
+    /**
+     * 移除Single
+     * @param sid
+     */
+    public static void removeSingle(int sid) {
+        if(MaleAmbryApp.getmFavoSingleList() != null) {
+            FavoSingle favoSingle = new FavoSingle();
+            favoSingle.setSid(sid);
+            MaleAmbryApp.getmFavoSingleList().remove(favoSingle);
+        }
+    }
+
+    /**
+     * 移除match
+     * @param mid
+     */
+    public static void removeMatch(int mid) {
+        if(MaleAmbryApp.getmFavoMatchList() != null) {
+            FavoMatch favoMatch = new FavoMatch();
+            favoMatch.setFmid(mid);
+            MaleAmbryApp.getmFavoMatchList().remove(favoMatch);
+        }
+    }
+
+    /**
+     * 移除discovery
+     * @param did
+     */
+    public static void removeDiscovery(int did) {
+        if(MaleAmbryApp.getmFavoDiscoveryList() != null) {
+            FavoDiscovery favoDiscovery = new FavoDiscovery();
+            favoDiscovery.setDid(did);
+            MaleAmbryApp.getmFavoDiscoveryList().remove(favoDiscovery);
         }
     }
 

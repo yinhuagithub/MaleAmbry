@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.listeners.OnLoginListener;
 import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
@@ -84,7 +85,17 @@ public class LoginActivity extends BaseActivity {
         String password = mEtPassword.getText().toString().trim();
 
         if(!TextUtils.isEmpty(login_name) && !TextUtils.isEmpty(password) && verifyPhone(login_name)) {
-            loginAccount(login_name, password);
+            User.loginAccount(DEFAULT_APP_TOKEN, login_name, password, new OnLoginListener() {
+                @Override
+                public void onSuccess() {
+                    LoginActivity.this.finish();
+                }
+
+                @Override
+                public void onFailure() {
+                    Toast.makeText(LoginActivity.this, "账号或者密码错误，请重新输入。", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
@@ -99,30 +110,4 @@ public class LoginActivity extends BaseActivity {
         return  matcher.matches();
     }
 
-    /**
-     * 用户登录
-     */
-    private void loginAccount(String loginName, String password) {
-        MaleAmbryRetrofit.getInstance().login(DEFAULT_APP_TOKEN, loginName, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseMessage<User>>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {}
-
-                    @Override
-                    public void onNext(ResponseMessage<User> responseMessage) {
-                        if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
-                            MaleAmbryApp.setUser(responseMessage.getResults());
-                            LoginActivity.this.finish();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "账号或者密码错误，请重新输入。", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
 }

@@ -40,6 +40,10 @@ public class Single {
     @Expose
     private String target_url;
 
+    @SerializedName("shop_url")
+    @Expose
+    private String shop_url;
+
     public int getSid() {
         return sid;
     }
@@ -94,6 +98,14 @@ public class Single {
 
     public void setTarget_url(String target_url) {
         this.target_url = target_url;
+    }
+
+    public String getShop_url() {
+        return shop_url;
+    }
+
+    public void setShop_url(String shop_url) {
+        this.shop_url = shop_url;
     }
 
     @Override

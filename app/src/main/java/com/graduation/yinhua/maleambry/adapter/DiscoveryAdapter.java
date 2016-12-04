@@ -93,6 +93,8 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery, RecyclerVie
                 @Override
                 public void onClick(int position, Discovery item) {
                     Intent intent = new Intent(mContext, DetailActivity.class);
+                    intent.putExtra("type", "discovery");
+                    intent.putExtra("did", item.getDid());
                     intent.putExtra("title", item.getTitle());
                     intent.putExtra("thumb_url", item.getDetail_url());
                     mContext.startActivity(intent);

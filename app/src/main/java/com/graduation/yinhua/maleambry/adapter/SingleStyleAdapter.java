@@ -158,9 +158,15 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
                     User user = MaleAmbryApp.getUser();
                     if(MaleAmbryApp.containsSingle(item.getSid())) {
                         FavoSingle.removeFavoSid(user.getApp_token(), item.getSid());
+                        MaleAmbryApp.removeSingle(item.getSid());
+                        ((ImageView)v).setSelected(false);
                     } else {
                         if(user != null && user.isLogin()) {
                             FavoSingle.addFavoSid(user.getApp_token(), item.getSid());
+                            FavoSingle favoSingle = new FavoSingle();
+                            favoSingle.setSid(item.getSid());
+                            MaleAmbryApp.getmFavoSingleList().add(favoSingle);
+                            ((ImageView)v).setSelected(true);
                         } else {
                             Toast.makeText(mContext, "请先登录后，再来收藏", Toast.LENGTH_SHORT).show();
                         }
@@ -174,6 +180,8 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
                     intent.putExtra("type", "single");
                     intent.putExtra("title", item.getTitle());
                     intent.putExtra("sid", item.getSid());
+                    intent.putExtra("shop_url", item.getShop_url());
+                    Log.e(TAG, "url----------->" + item.getShop_url());
                     mContext.startActivity(intent);
                 }
             });

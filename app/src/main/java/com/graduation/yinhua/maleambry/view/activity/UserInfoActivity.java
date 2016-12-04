@@ -101,7 +101,7 @@ public class UserInfoActivity extends BaseActivity {
         if(!TextUtils.isEmpty(nick_name) && !TextUtils.isEmpty(phone) && verifyPhone(phone)) {
             User user = MaleAmbryApp.getUser();
             if(user != null && user.isLogin()) {
-                modifyUserInfo(user.getApp_token(), user.getNick_name(), user.getPhone());
+                modifyUserInfo(user.getApp_token(), nick_name, phone);
             }
         }
     }

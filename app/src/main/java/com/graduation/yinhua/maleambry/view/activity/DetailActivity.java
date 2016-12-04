@@ -16,8 +16,12 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
+import com.graduation.yinhua.maleambry.model.FavoDiscovery;
+import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 
 import butterknife.BindView;
@@ -30,6 +34,7 @@ import butterknife.BindView;
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
 public class DetailActivity extends BaseActivity {
+    private static final String TAG = DetailActivity.class.getSimpleName();
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -37,11 +42,15 @@ public class DetailActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView mIvBack;
 
+    @BindView(R.id.iv_fav)
+    ImageView mIvFav;
+
     @BindView(R.id.ll_gallery)
     LinearLayout mLlGallery;
 
-    WebView mWebView;
-    WebSettings mWebSettings;
+    private int did;
+    private WebView mWebView;
+    private WebSettings mWebSettings;
 
     @Override
     protected boolean getImmersiveStatus() {
@@ -58,8 +67,20 @@ public class DetailActivity extends BaseActivity {
         super.initWidgets();
 
         Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
+        did = intent.getIntExtra("did", -1);
         String title = intent.getStringExtra("title");
         String thumb_url = intent.getStringExtra("thumb_url");
+
+        if(!TextUtils.isEmpty(type) && type.equals("discovery") && did != -1) {
+            mIvFav.setVisibility(View.VISIBLE);
+            if(MaleAmbryApp.containsDiscovery(did)) {
+                mIvFav.setSelected(true);
+            } else {
+                mIvFav.setSelected(false);
+            }
+        }
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWebView = new WebView(getApplicationContext());
         mWebView.setLayoutParams(params);
@@ -125,6 +146,28 @@ public class DetailActivity extends BaseActivity {
                 DetailActivity.this.finish();
             }
         });
+
+        mIvFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = MaleAmbryApp.getUser();
+                if(MaleAmbryApp.containsDiscovery(did)) {
+                    FavoDiscovery.removeFavoDid(user.getApp_token(), did);
+                    MaleAmbryApp.removeDiscovery(did);
+                    mIvFav.setSelected(false);
+                } else {
+                    if(user != null && user.isLogin()) {
+                        FavoDiscovery.addFavoDid(user.getApp_token(), did);
+                        FavoDiscovery  favoDiscovery = new FavoDiscovery();
+                        favoDiscovery.setDid(did);
+                        MaleAmbryApp.getmFavoDiscoveryList().add(favoDiscovery);
+                        mIvFav.setSelected(true);
+                    } else {
+                        Toast.makeText(DetailActivity.this, "请先登录后，再来收藏", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -146,6 +189,8 @@ public class DetailActivity extends BaseActivity {
             mWebView.destroy();
             mWebView = null;
         }
+//        System.exit(0);
         super.onDestroy();
     }
+
 }

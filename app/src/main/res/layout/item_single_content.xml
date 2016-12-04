@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@mipmap/man1"
+        android:src="@drawable/default_nanyichu"
         app:origin_width="1"
         app:origin_height="1.3"/>
 
@@ -27,7 +27,7 @@
         android:paddingStart="10dp"
         android:paddingTop="8dp"
         android:singleLine="true"
-        android:text="街头欧美搭"
+        android:text=""
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -53,7 +53,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
             android:textSize="12sp"
-            android:text="178" />
+            android:text="" />
 
         <ImageView
             android:id="@+id/iv_single_fav"
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="￥227.00"
+            android:text=""
             android:layout_toStartOf="@id/iv_single_fav"
             android:layout_marginStart="5dp"
             android:textColor="@color/red_price"

@@ -21,6 +21,15 @@
             android:layout_marginStart="10dp"
             android:src="@mipmap/back" />
 
+        <ImageView
+            android:id="@+id/iv_fav"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            android:src="@drawable/selector_white_favo_heart"/>
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager

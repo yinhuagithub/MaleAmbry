@@ -137,9 +137,15 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
                     User user = MaleAmbryApp.getUser();
                     if(MaleAmbryApp.containsSingle(single.getSid())) {
                         FavoSingle.removeFavoSid(user.getApp_token(), single.getSid());
+                        MaleAmbryApp.removeSingle(single.getSid());
+                        ((ImageView)v).setSelected(false);
                     } else {
                         if(user != null && user.isLogin()) {
                             FavoSingle.addFavoSid(user.getApp_token(), single.getSid());
+                            FavoSingle favoSingle = new FavoSingle();
+                            favoSingle.setSid(single.getSid());
+                            MaleAmbryApp.getmFavoSingleList().add(favoSingle);
+                            ((ImageView)v).setSelected(true);
                         } else {
                             Toast.makeText(mContext, "请先登录后，再来收藏", Toast.LENGTH_SHORT).show();
                         }

@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="型男穿搭"
+        android:text=""
         android:singleLine="true"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:scaleType="fitXY"
-            android:src="@mipmap/man1"
+            android:src="@drawable/default_nanyichu"
             app:origin_height="1.5"
             app:origin_width="1" />
 
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@mipmap/man2"
+                android:src="@drawable/default_nanyichu"
                 app:origin_height="1.5"
                 app:origin_width="1"
                 app:clip_height="3"/>
@@ -60,7 +60,7 @@
                 android:layout_below="@id/riv_match_item2"
                 android:layout_marginTop="6dp"
                 android:scaleType="fitXY"
-                android:src="@mipmap/man3"
+                android:src="@drawable/default_nanyichu"
                 app:origin_height="1.5"
                 app:origin_width="1"
                 app:clip_height="3"/>
@@ -75,7 +75,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
-        android:text="毛呢大衣+毛衣+牛仔裤"
+        android:text=""
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp" />
 

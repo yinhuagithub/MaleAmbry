@@ -2,16 +2,22 @@ package com.graduation.yinhua.maleambry.view.activity;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.graduation.yinhua.maleambry.MaleAmbryApp;
 import com.graduation.yinhua.maleambry.R;
 import com.graduation.yinhua.maleambry.adapter.GalleryAdapter;
+import com.graduation.yinhua.maleambry.model.FavoMatch;
 import com.graduation.yinhua.maleambry.model.Gallery;
 import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.ThumbMatch;
 import com.graduation.yinhua.maleambry.model.ThumbSingle;
+import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
@@ -33,6 +39,7 @@ import rx.schedulers.Schedulers;
  * git：https://github.com/yinhuagithub/MaleAmbry
  */
 public class GalleryActivity extends BaseActivity {
+    private static final String TAG = GalleryActivity.class.getSimpleName();
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -40,8 +47,14 @@ public class GalleryActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView mIvBack;
 
+    @BindView(R.id.iv_fav)
+    ImageView mIvFav;
+
     @BindView(R.id.viewpager)
     ViewPager mVpGallery;
+
+    private int mid;
+    private String shop_url;
 
     @Override
     protected boolean getImmersiveStatus() {
@@ -65,8 +78,16 @@ public class GalleryActivity extends BaseActivity {
         String type = intent.getStringExtra("type");
         mToolbarTitle.setText(intent.getStringExtra("title"));
         if(type.equals("match")) {
-            fetchThumbMatchByNet(intent.getIntExtra("mid", 0));
+            mid = intent.getIntExtra("mid", 0);
+            fetchThumbMatchByNet(mid);
+            mIvFav.setVisibility(View.VISIBLE);
+            if(MaleAmbryApp.containsMatch(mid)) {
+                mIvFav.setSelected(true);
+            } else {
+                mIvFav.setSelected(false);
+            }
         } else if (type.equals("single")) {
+            shop_url = intent.getStringExtra("shop_url");
             fetchThumbSingleByNet(intent.getIntExtra("sid", 0));
         }
     }
@@ -78,6 +99,27 @@ public class GalleryActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 GalleryActivity.this.finish();
+            }
+        });
+        mIvFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = MaleAmbryApp.getUser();
+                if(MaleAmbryApp.containsMatch(mid)) {
+                    FavoMatch.removeFavoMid(user.getApp_token(), mid);
+                    MaleAmbryApp.removeMatch(mid);
+                    mIvFav.setSelected(false);
+                } else {
+                    if(user != null && user.isLogin()) {
+                        FavoMatch.addFavoMid(user.getApp_token(), mid);
+                        FavoMatch  favoMatch = new FavoMatch();
+                        favoMatch.setMid(mid);
+                        MaleAmbryApp.getmFavoMatchList().add(favoMatch);
+                        mIvFav.setSelected(true);
+                    } else {
+                        Toast.makeText(GalleryActivity.this, "请先登录后，再来收藏", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
@@ -150,7 +192,7 @@ public class GalleryActivity extends BaseActivity {
     }
 
     /**
-     * 处理match数据图集
+     * 处理single数据图集
      * @param results
      */
     private void handleThumbSingleData(List<ThumbSingle> results) {
@@ -160,7 +202,11 @@ public class GalleryActivity extends BaseActivity {
                 Gallery gallery = new Gallery();
                 ThumbSingle thumbSingle = results.get(index);
                 gallery.setThumbnail(thumbSingle.getThumbnail());
-                gallery.setThumb_url("http://www.baidu.com");
+                if(!TextUtils.isEmpty(shop_url)) {
+                    gallery.setThumb_url(shop_url);
+                } else {
+                    gallery.setThumb_url("http://console.nanyiku.net/app/schoolDetail.do?id=941&flag=share");
+                }
                 galleries.add(gallery);
             }
             GalleryAdapter adater = new GalleryAdapter(this, galleries);

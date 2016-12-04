@@ -3,6 +3,7 @@ package com.graduation.yinhua.maleambry.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.graduation.yinhua.maleambry.MaleAmbryApp;
+import com.graduation.yinhua.maleambry.listeners.OnLoginListener;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 
@@ -119,7 +120,7 @@ public class User {
      * @param loginName
      * @param password
      */
-    public static void loginAccount(String app_token, String loginName, String password) {
+    public static void loginAccount(String app_token, String loginName, String password, final OnLoginListener listener) {
         MaleAmbryRetrofit.getInstance().login(app_token, loginName, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -139,6 +140,13 @@ public class User {
                             FavoSingle.fetchFavoSingle(user.getApp_token());
                             FavoMatch.fetchFavoMatch(user.getApp_token());
                             FavoDiscovery.fetchFavoDiscovery(user.getApp_token());
+                            if(listener != null) {
+                                listener.onSuccess();
+                            }
+                        } else {
+                            if(listener != null) {
+                                listener.onFailure();
+                            }
                         }
                     }
                 });
