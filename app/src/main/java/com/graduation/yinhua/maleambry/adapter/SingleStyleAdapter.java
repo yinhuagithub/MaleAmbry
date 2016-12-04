@@ -148,6 +148,7 @@ public class SingleStyleAdapter extends BaseRecyclerAdapter<Single, RecyclerView
                     styleChangeListener.changeStyle(position);
                 }
             });
+        } else if (itemViewType == SingleItemType.CONTENT.ordinal()) {
             SingleStyleViewHolder singleStyleHolder = (SingleStyleViewHolder) holder;
             final Single item = getItem(position - TYPE_COUNT + 1);
 
