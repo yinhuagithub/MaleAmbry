@@ -88,14 +88,17 @@ public class LoginActivity extends BaseActivity {
             User.loginAccount(DEFAULT_APP_TOKEN, login_name, password, new OnLoginListener() {
                 @Override
                 public void onSuccess() {
+                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     LoginActivity.this.finish();
                 }
 
                 @Override
                 public void onFailure() {
-                    Toast.makeText(LoginActivity.this, "账号或者密码错误，请重新输入。", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "账号或者密码错误，请重新输入", Toast.LENGTH_SHORT).show();
                 }
             });
+        } else {
+            Toast.makeText(LoginActivity.this, "请检查账号和密码", Toast.LENGTH_SHORT).show();
         }
     }
 

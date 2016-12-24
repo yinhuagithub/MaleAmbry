@@ -20,6 +20,7 @@ import com.graduation.yinhua.maleambry.model.ThumbSingle;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 import com.graduation.yinhua.maleambry.view.widgets.ScaleTransformer;
 
@@ -129,6 +130,9 @@ public class GalleryActivity extends BaseActivity {
      * @param mid
      */
     private void fetchThumbMatchByNet(int mid) {
+        if(!NetworkUtil.checkNetwork(GalleryActivity.this)) {
+            return;
+        }
         MaleAmbryRetrofit.getInstance().getThumbMatch(mid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

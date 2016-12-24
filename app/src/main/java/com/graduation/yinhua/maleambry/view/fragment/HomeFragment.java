@@ -19,6 +19,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.presenter.HomePresenter;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseMVPFragment;
 import com.graduation.yinhua.maleambry.view.widgets.BannerTimerController;
 
@@ -155,6 +156,12 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.View, HomePresent
      * 获取今日精选信息
      */
     private void fetchRecommandSingleByNet() {
+        if(!NetworkUtil.checkNetwork(getContext(), mRootView)) {
+            if(mSrlHome.isRefreshing()) {
+                mSrlHome.setRefreshing(false);
+            }
+            return;
+        }
         MaleAmbryRetrofit.getInstance().getRecommandSingle()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

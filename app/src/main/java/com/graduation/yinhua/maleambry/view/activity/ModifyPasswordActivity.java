@@ -14,6 +14,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 
 import butterknife.BindView;
@@ -105,6 +106,9 @@ public class ModifyPasswordActivity extends BaseActivity {
      * @param phone
      */
     private void modifyPassword(String app_token, String old_password, String new_password, String phone) {
+        if(!NetworkUtil.checkNetwork(ModifyPasswordActivity.this)) {
+            return;
+        }
         MaleAmbryRetrofit.getInstance().modifyPassword(app_token, old_password, new_password, phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

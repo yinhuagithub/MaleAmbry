@@ -1,6 +1,7 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseLazyLoaderFragment;
 
 import java.util.List;
@@ -91,6 +93,12 @@ public class MatchFavoriteFragment extends BaseLazyLoaderFragment {
      * 加载单品收藏数据
      */
     private void loadSingleFavoriteByNet() {
+        if(!NetworkUtil.checkNetwork(getContext(), mRootView)) {
+            if(mSrlFavoriteMatch.isRefreshing()) {
+                mSrlFavoriteMatch.setRefreshing(false);
+            }
+            return;
+        }
         User user = MaleAmbryApp.getUser();
         MaleAmbryRetrofit.getInstance().getFavoriteMatch(user.getApp_token(), 0)
                 .subscribeOn(Schedulers.io())
@@ -101,6 +109,7 @@ public class MatchFavoriteFragment extends BaseLazyLoaderFragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        Snackbar.make(mRootView, R.string.network_anomaly, Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override

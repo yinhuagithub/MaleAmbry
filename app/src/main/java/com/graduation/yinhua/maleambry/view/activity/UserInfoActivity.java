@@ -14,6 +14,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 
 import java.util.regex.Matcher;
@@ -121,6 +122,9 @@ public class UserInfoActivity extends BaseActivity {
      * 修改用户信息
      */
     private void modifyUserInfo(String app_token, String nick_name, String phone) {
+        if(!NetworkUtil.checkNetwork(UserInfoActivity.this)) {
+            return;
+        }
         MaleAmbryRetrofit.getInstance().modifyUserInfo(app_token, nick_name, phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

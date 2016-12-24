@@ -15,6 +15,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 
 import butterknife.BindView;
@@ -98,6 +99,9 @@ public class FeedBackActivity extends BaseActivity {
      * 修改用户信息
      */
     private void feedback(String contact, String content) {
+        if(!NetworkUtil.checkNetwork(FeedBackActivity.this)) {
+            return;
+        }
         MaleAmbryRetrofit.getInstance().feedback(contact, content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

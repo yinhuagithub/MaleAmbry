@@ -234,7 +234,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<Single, RecyclerView.ViewHo
      * @param holder
      */
     private void bindDataToMatchWithTitleView(final HomeMatchWithTitleViewHolder holder) {
-        holder.tv_match_title.setText(R.string.home_match_title);
+        holder.tv_title.setText(R.string.home_match_title);
         fetchMatchByNet(0, new IObtainDataListener<Match>() {
             @Override
             public void obtainData(final Match match) {

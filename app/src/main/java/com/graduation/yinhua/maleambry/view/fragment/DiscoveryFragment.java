@@ -15,6 +15,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.presenter.DiscoveryPresenter;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseMVPFragment;
 
 import java.util.ArrayList;
@@ -118,6 +119,12 @@ public class DiscoveryFragment extends BaseMVPFragment<DiscoveryContract.View, D
      * @param page 页码
      */
     private void fetchDiscovery(final int page) {
+        if(!NetworkUtil.checkNetwork(getContext(), mRootView)) {
+            if(mSrlDiscovery.isRefreshing()) {
+                mSrlDiscovery.setRefreshing(false);
+            }
+            return;
+        }
         MaleAmbryRetrofit.getInstance().getDiscovery(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -127,6 +134,7 @@ public class DiscoveryFragment extends BaseMVPFragment<DiscoveryContract.View, D
 
                     @Override
                     public void onError(Throwable e) {
+                        Snackbar.make(mRootView, R.string.network_anomaly, Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override

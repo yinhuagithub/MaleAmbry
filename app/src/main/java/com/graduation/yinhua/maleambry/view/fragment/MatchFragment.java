@@ -1,5 +1,6 @@
 package com.graduation.yinhua.maleambry.view.fragment;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
 import com.graduation.yinhua.maleambry.presenter.MatchPresenter;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseMVPFragment;
 
 import java.util.ArrayList;
@@ -120,6 +122,9 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
     }
 
     private void fetchMatchByNet(int style, int page) {
+        if(!NetworkUtil.checkNetwork(getContext(), mRootView)) {
+            return;
+        }
         MaleAmbryRetrofit.getInstance().getMatch(style, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -129,6 +134,7 @@ public class MatchFragment extends BaseMVPFragment<MatchContract.View, MatchPres
 
                     @Override
                     public void onError(Throwable e) {
+                        Snackbar.make(mRootView, R.string.network_anomaly, Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override

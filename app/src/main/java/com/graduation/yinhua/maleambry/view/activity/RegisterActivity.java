@@ -18,6 +18,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 
 import java.util.regex.Matcher;
@@ -199,6 +200,9 @@ public class RegisterActivity extends BaseActivity {
      * 注册用户
      */
     private void registerUser(String loginName, String password, String phone) {
+        if(!NetworkUtil.checkNetwork(RegisterActivity.this)) {
+            return;
+        }
         MaleAmbryRetrofit.getInstance().register(loginName, password, phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -213,7 +217,10 @@ public class RegisterActivity extends BaseActivity {
                     public void onNext(ResponseMessage<User> responseMessage) {
                         if (responseMessage.getStatus_code() == StatusCode.SUCCESS.getStatus_code()) {
                             MaleAmbryApp.setUser(responseMessage.getResults());
+                            Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                             RegisterActivity.this.finish();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "手机号已被注册过，请换个手机号注册", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -2,6 +2,7 @@ package com.graduation.yinhua.maleambry.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.graduation.yinhua.maleambry.model.Single;
 import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseLazyLoaderFragment;
 
 import java.util.ArrayList;
@@ -128,6 +130,12 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment implements IStyl
     }
 
     private void fetchSingleByNet() {
+        if(!NetworkUtil.checkNetwork(getContext(), mRootView)) {
+            if(mSrlSingleStyle.isRefreshing()) {
+                mSrlSingleStyle.setRefreshing(false);
+            }
+            return;
+        }
         MaleAmbryRetrofit.getInstance().getSingle(mStyle, mPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -137,6 +145,7 @@ public class SingleStyleFragment extends BaseLazyLoaderFragment implements IStyl
 
                     @Override
                     public void onError(Throwable e) {
+                        Snackbar.make(mRootView, R.string.network_anomaly, Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override

@@ -16,6 +16,7 @@ import com.graduation.yinhua.maleambry.model.StatusCode;
 import com.graduation.yinhua.maleambry.model.User;
 import com.graduation.yinhua.maleambry.net.MaleAmbryRetrofit;
 import com.graduation.yinhua.maleambry.net.response.ResponseMessage;
+import com.graduation.yinhua.maleambry.utils.NetworkUtil;
 import com.graduation.yinhua.maleambry.view.base.BaseActivity;
 
 import java.util.regex.Matcher;
@@ -193,6 +194,9 @@ public class ForgotPasswordActivity extends BaseActivity {
      * 找回密码
      */
     private void foundPassword(String phone, String password) {
+        if(!NetworkUtil.checkNetwork(ForgotPasswordActivity.this)) {
+            return;
+        }
         MaleAmbryRetrofit.getInstance().forgotPassword(phone, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
